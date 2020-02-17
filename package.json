@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "compile:watch": "tsc -w"
+    "compile:watch": "tsc -w",
+    "test": "ts-node node_modules/jasmine/bin/jasmine"
   },
   "author": "Wojciech Bal",
   "license": "ISC",
@@ -13,11 +14,14 @@
     "typescript": "^3.7.5"
   },
   "devDependencies": {
+    "@types/jasmine": "^3.5.4",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "jasmine": "^3.5.0",
+    "jasmine-spec-reporter": "^4.2.1",
     "prettier": "^1.19.1"
   }
 }
