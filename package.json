@@ -28,6 +28,7 @@
     "http": "0.0.0",
     "jasmine": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
+    "node-mocks-http": "^1.8.1",
     "prettier": "^1.19.1",
     "request": "^2.88.2"
   }

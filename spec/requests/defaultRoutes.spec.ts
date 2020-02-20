@@ -14,7 +14,7 @@ describe("Default router", () => {
   });
 
   supportedMethods.forEach(method => {
-    describe(method.toUpperCase(), () => {
+    describe(`${method.toUpperCase()} /not_specified`, () => {
       describe("when not specified route is requested", () => {
         const path = `${baseUrl}/not_specified`;
 
