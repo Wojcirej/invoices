@@ -108,4 +108,7 @@ dist/
 tmp/
 temp/
 
+# Application config & env variables
+config.json
+
 # End of https://www.gitignore.io/api/node
