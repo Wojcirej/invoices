@@ -8,9 +8,6 @@ jasmine.getEnv().addReporter(
     },
     summary: {
       displayFailed: true
-    },
-    suite: {
-      displayNumber: true
     }
   })
 );
