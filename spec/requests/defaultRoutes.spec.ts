@@ -1,7 +1,7 @@
 import { setUpTestServer, baseUrl } from "./../support/testServer";
-import request from "request";
+import fetch from "node-fetch";
 
-const supportedMethods = ["get", "post", "put", "patch", "delete"];
+const supportedMethods = ["GET", "POST", "PUT", "PATCH", "DELETE"];
 let server;
 
 describe("Default router", () => {
@@ -14,29 +14,26 @@ describe("Default router", () => {
   });
 
   supportedMethods.forEach(method => {
-    describe(`${method.toUpperCase()} /not_specified`, () => {
+    describe(`${method} /not_specified`, () => {
       describe("when not specified route is requested", () => {
         const path = `${baseUrl}/not_specified`;
 
-        it("responds with HTTP 404 status", done => {
-          request[method](path, (error, response, body) => {
-            expect(response.statusCode).toEqual(404);
-            done();
-          });
+        it("responds with HTTP 404 status", async () => {
+          const response = await fetch(path, { method: method });
+          const status = await response.status;
+          expect(status).toEqual(404);
         });
 
-        it("responds with application name", done => {
-          request[method](path, (error, response, body) => {
-            expect(JSON.parse(body).application).toEqual("Invoices API");
-            done();
-          });
+        it("responds with application name", async () => {
+          const response = await fetch(path, { method: method });
+          const body = await response.json();
+          expect(body.application).toEqual("Invoices API");
         });
 
-        it("responds with message about page not found", done => {
-          request[method](path, (error, response, body) => {
-            expect(JSON.parse(body).message).toEqual("The page you're looking for doesn't exist.");
-            done();
-          });
+        it("responds with message about page not found", async () => {
+          const response = await fetch(path, { method: method });
+          const body = await response.json();
+          expect(body.message).toEqual("The page you're looking for doesn't exist.");
         });
       });
     });

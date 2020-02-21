@@ -1,5 +1,5 @@
 import { setUpTestServer, baseUrl } from "./../support/testServer";
-import request from "request";
+import fetch from "node-fetch";
 
 let server;
 
@@ -15,18 +15,16 @@ describe("Healthcheck router", () => {
   describe("GET /status", () => {
     const path = `${baseUrl}/status`;
 
-    it("returns HTTP 200 status", done => {
-      request.get(path, (error, response, body) => {
-        expect(response.statusCode).toEqual(200);
-        done();
-      });
+    it("returns HTTP 200 status", async () => {
+      const response = await fetch(path);
+      const status = await response.status;
+      expect(status).toEqual(200);
     });
 
-    it("returns info about HTTP health", done => {
-      request.get(path, (error, response, body) => {
-        expect(JSON.parse(body).status.http).toEqual("Healthy");
-        done();
-      });
+    it("returns info about HTTP health", async () => {
+      const response = await fetch(path);
+      const body = await response.json();
+      expect(body.status.http).toEqual("Healthy");
     });
   });
 });
