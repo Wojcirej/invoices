@@ -1,4 +1,4 @@
-const statusHandler = async (req, res) => {
+const getAppStatus = async (req, res) => {
   res.status(200).json({
     status: {
       http: "Healthy"
@@ -6,4 +6,4 @@ const statusHandler = async (req, res) => {
   });
 };
 
-export { statusHandler };
+export { getAppStatus };

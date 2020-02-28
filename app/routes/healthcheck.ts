@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
 
-import { statusHandler } from "./../actions/status";
+import { getAppStatus } from "./../actions/getAppStatus";
 
-router.get("/", statusHandler);
+router.get("/", getAppStatus);
 
 export { router };

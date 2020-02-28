@@ -8,7 +8,7 @@ const app = express();
 
 app.use(morgan("combined"));
 
-app.use("/status", healthCheckRouter);
+app.use("/app_status", healthCheckRouter);
 app.use("*", defaultRouter);
 
 export default app;

@@ -12,8 +12,8 @@ describe("Healthcheck router", () => {
     server.close();
   });
 
-  describe("GET /status", () => {
-    const path = `${baseUrl}/status`;
+  describe("GET /app_status", () => {
+    const path = `${baseUrl}/app_status`;
 
     it("returns HTTP 200 status", async () => {
       const response = await fetch(path);
