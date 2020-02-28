@@ -1,4 +1,4 @@
-import { setUpTestServer, baseUrl } from "./../support/testServer";
+import { setUpTestServer, baseUrl } from "./../../support/testServer";
 import fetch from "node-fetch";
 
 const supportedMethods = ["GET", "POST", "PUT", "PATCH", "DELETE"];
