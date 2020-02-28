@@ -1,7 +1,7 @@
 import httpMocks from "node-mocks-http";
-import { getAppStatus } from "./../../app/actions/getAppStatus";
+import { getAppStatus } from "./../../../app/actions/getAppStatus";
 
-describe("GET /status action", () => {
+describe("getAppStatus", () => {
   const mockRequest = httpMocks.createRequest({
     method: "GET",
     url: "/status"
