@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "test": "ENV=test ts-node node_modules/jasmine/bin/jasmine",
+    "test:api": "ENV=test ts-node node_modules/jasmine/bin/jasmine spec/integration/**/*",
+    "test:unit": "ENV=test ts-node node_modules/jasmine/bin/jasmine spec/unit/**/*",
     "lint": "eslint **/*.ts",
     "server:dev": "ENV=dev ts-node index.ts",
     "server:prod": "ENV=prod tsc && node dist/index.js"
