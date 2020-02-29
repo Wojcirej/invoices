@@ -1,6 +1,7 @@
 import { Company } from "./Company";
 import { Order } from "./Order";
 import InvoiceStatuses from "./lib/InvoiceStatuses";
+import { InvoiceConstructorParams } from "./lib/interfaces";
 
 export class Invoice {
   private invoiceNumber: string;
@@ -10,13 +11,14 @@ export class Invoice {
   private buyer: Company;
   private order: Order;
   private status: InvoiceStatuses;
-  constructor(invoiceDetails, seller, buyer, order) {
-    this.invoiceNumber = invoiceDetails.invoiceNumber;
-    this.issuedAt = invoiceDetails.issuedAt;
-    this.saleDate = invoiceDetails.saleDate;
-    this.seller = seller;
-    this.buyer = buyer;
-    this.order = order;
-    this.status = invoiceDetails.status;
+
+  constructor(invoice: InvoiceConstructorParams) {
+    this.invoiceNumber = invoice.invoiceDetails.invoiceNumber;
+    this.issuedAt = invoice.invoiceDetails.issuedAt;
+    this.saleDate = invoice.invoiceDetails.saleDate;
+    this.status = invoice.invoiceDetails.status;
+    this.seller = invoice.seller;
+    this.buyer = invoice.buyer;
+    this.order = invoice.order;
   }
 }

@@ -3,7 +3,7 @@ import { Product } from "../../../domain/Product";
 describe("Product", () => {
   describe("#calculateGrossPrice", () => {
     it("returns netPrice with valueAddedTax taken into consideration", () => {
-      const product = new Product({ netPrice: 10.0, valueAddedTax: 0.23 });
+      const product = new Product({ netPrice: 10.0, valueAddedTax: 0.23, position: 1, name: "Random" });
       expect(product.calculateGrossPrice()).toEqual(12.3);
     });
   });
