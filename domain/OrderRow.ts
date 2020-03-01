@@ -2,8 +2,8 @@ import { Product } from "./Product";
 import { OrderRowConstructorParams } from "./lib/interfaces";
 
 export class OrderRow {
-  private product: Product;
-  private readonly quantity: number;
+  public readonly product: Product;
+  public readonly quantity: number;
 
   constructor(orderRowDetails: OrderRowConstructorParams) {
     this.product = orderRowDetails.product;

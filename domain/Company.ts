@@ -1,12 +1,12 @@
 import { CompanyConstructorParams } from "./lib/interfaces";
 
 export class Company {
-  private name: string;
-  private address: string;
-  private taxPayerNumber: string;
-  private telephone: string;
-  private website: string;
-  private email: string;
+  public readonly name: string;
+  public readonly address: string;
+  public readonly taxPayerNumber: string;
+  public readonly telephone: string;
+  public readonly website: string;
+  public readonly email: string;
 
   constructor(companyDetails: CompanyConstructorParams) {
     this.name = companyDetails.name;

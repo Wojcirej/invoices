@@ -10,7 +10,8 @@ describe("OrderRow", () => {
           valueAddedTax: 0.23,
           name: "Random",
           position: 1
-        }), quantity: 5
+        }),
+        quantity: 5
       });
       expect(orderRow.calculatePrice()).toEqual(61.5);
     });

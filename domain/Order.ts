@@ -1,7 +1,8 @@
 import { OrderRow } from "./OrderRow";
 
 export class Order {
-  private orderRows: OrderRow[];
+  public readonly orderRows: OrderRow[];
+
   constructor(orderRows: OrderRow[]) {
     this.orderRows = orderRows;
   }
