@@ -6,6 +6,11 @@ describe("InvoiceRepository", () => {
   const repository = new InvoiceRepository();
   describe("#save", () => {
     describe("when success", () => {
+      afterEach(() => {
+        if (fs.existsSync("/tmp/invoice.json")) {
+          fs.unlinkSync("/tmp/invoice.json");
+        }
+      });
       it("returns true", () => {
         expect(repository.save({})).toBe(true);
       });
