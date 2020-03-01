@@ -13,7 +13,7 @@ export class ProductFactory {
     this.position = data.position || 1;
     this.name = data.name || faker.name.title();
     this.netPrice = data.netPrice || faker.random.number({ precision: 2 });
-    this.valueAddedTax = data.valueAddedTax || faker.random.number({ min: 0.05, max: 0.7, precision: 2 });
+    this.valueAddedTax = data.valueAddedTax || Number(Math.random().toPrecision(2));
   }
 
   static build(data: ProductConstructorParams): Product {
