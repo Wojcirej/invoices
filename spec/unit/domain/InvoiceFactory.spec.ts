@@ -3,6 +3,7 @@ import { Invoice } from "../../../domain/Invoice";
 import InvoiceStatuses from "../../../domain/lib/InvoiceStatuses";
 import { Company } from "../../../domain/Company";
 import { Order } from "../../../domain/Order";
+import { Product } from "../../../domain/Product";
 
 describe("InvoiceFactory", () => {
   const data = {
@@ -107,6 +108,12 @@ describe("InvoiceFactory", () => {
 
     it("returns Invoice aggregate with as much order rows as in params", () => {
       expect(invoice.order.orderRows.length).toEqual(data.invoice.order.length);
+    });
+
+    it("returns Invoice aggregate with order rows aggregating Product instances", () => {
+      invoice.order.orderRows.forEach(orderRow => {
+        expect(orderRow.product).toBeInstanceOf(Product);
+      });
     });
 
     it("returns Invoice aggregate with order details as in params", () => {

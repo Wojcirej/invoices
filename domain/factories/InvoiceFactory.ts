@@ -1,10 +1,9 @@
 import { Invoice } from "../Invoice";
 import { CompanyFactory } from "./CompanyFactory";
 import InvoiceStatuses from "../lib/InvoiceStatuses";
-import { OrderRowFactory } from "./OrderRowFactory";
-import { Order } from "../Order";
+import { OrderFactory } from "./OrderFactory";
 
-class InvoiceFactory {
+export class InvoiceFactory {
   private readonly invoice;
 
   constructor(data) {
@@ -24,16 +23,12 @@ class InvoiceFactory {
     };
     const seller = CompanyFactory.build(this.invoice.seller);
     const buyer = CompanyFactory.build(this.invoice.buyer);
-    const mappedOrderRows = this.invoice.order.map(orderRow =>
-      OrderRowFactory.build({ product: orderRow.product, quantity: orderRow.quantity })
-    );
+    const order = OrderFactory.build(this.invoice.order);
     return new Invoice({
       invoiceDetails,
       buyer,
       seller,
-      order: new Order(mappedOrderRows)
+      order
     });
   }
 }
-
-export { InvoiceFactory };

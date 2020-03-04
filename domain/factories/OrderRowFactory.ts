@@ -8,12 +8,14 @@ export class OrderRowFactory {
   private readonly quantity: number;
 
   constructor(data: OrderRowConstructorParams) {
-    this.product = data.product || ProductFactory.build({
-      name: null,
-      position: null,
-      netPrice: null,
-      valueAddedTax: null
-    });
+    this.product =
+      data.product ||
+      ProductFactory.build({
+        name: null,
+        position: null,
+        netPrice: null,
+        valueAddedTax: null
+      });
     this.quantity = data.quantity || 1;
   }
 
