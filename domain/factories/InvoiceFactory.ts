@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 import { Invoice } from "../Invoice";
 import { CompanyFactory } from "./CompanyFactory";
 import InvoiceStatuses from "../lib/InvoiceStatuses";
@@ -16,6 +18,7 @@ export class InvoiceFactory {
 
   build(): Invoice {
     const invoiceDetails = {
+      id: uuid(),
       invoiceNumber: this.invoice.invoiceNumber,
       issuedAt: new Date(this.invoice.issuedAt),
       saleDate: new Date(this.invoice.saleDate),

@@ -1,7 +1,7 @@
 import faker from "faker";
+import { v4 as uuid } from "uuid";
 
 import { Company } from "../Company";
-import { CompanyConstructorParams } from "../lib/interfaces";
 
 export class CompanyFactory {
   private readonly name: string;
@@ -11,7 +11,7 @@ export class CompanyFactory {
   private readonly website: string;
   private readonly email: string;
 
-  constructor(data: CompanyConstructorParams) {
+  constructor(data) {
     this.name = data.name || faker.company.companyName();
     this.address = data.address || faker.address.country();
     this.taxPayerNumber = data.taxPayerNumber || "123-45-67-819";
@@ -20,12 +20,13 @@ export class CompanyFactory {
     this.email = data.email || faker.internet.email();
   }
 
-  static build(data: CompanyConstructorParams): Company {
+  static build(data): Company {
     return new CompanyFactory(data).build();
   }
 
   build(): Company {
     return new Company({
+      id: uuid(),
       name: this.name,
       address: this.address,
       taxPayerNumber: this.taxPayerNumber,

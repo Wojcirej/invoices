@@ -1,20 +1,32 @@
 import { CompanyFactory } from "../../../domain/factories/CompanyFactory";
 import { Company } from "../../../domain/Company";
+import { v4 as isUUIDv4 } from "is-uuid";
 
 describe("CompanyFactory", () => {
   describe(".build()", () => {
+    const data = {
+      name: "Name",
+      address: "Here",
+      taxPayerNumber: "123-456-78",
+      telephone: "12345678",
+      website: "www.example.com",
+      email: "email@example.com"
+    };
+
+    it("returns instance of Company", () => {
+      const company = CompanyFactory.build(data);
+      expect(company).toBeInstanceOf(Company);
+    });
+
+    it("returns instance of Company with new valid UUID as ID", () => {
+      const company = CompanyFactory.build(data);
+      expect(company.id).toBeTruthy("Company's ID is empty");
+      expect(isUUIDv4(company.id)).toBe(true);
+    });
+
     describe("when any values under acceptable keys passed", () => {
-      const data = {
-        name: "Name",
-        address: "Here",
-        taxPayerNumber: "123-456-78",
-        telephone: "12345678",
-        website: "www.example.com",
-        email: "email@example.com"
-      };
       it("returns instance of Company with passed data", () => {
         const company = CompanyFactory.build(data);
-        expect(company).toBeInstanceOf(Company);
         expect(company.name).toEqual(data.name);
         expect(company.address).toEqual(data.address);
         expect(company.taxPayerNumber).toEqual(data.taxPayerNumber);
@@ -23,6 +35,7 @@ describe("CompanyFactory", () => {
         expect(company.email).toEqual(data.email);
       });
     });
+
     describe("when no truthy values passed", () => {
       const data = {
         name: null,
@@ -32,6 +45,7 @@ describe("CompanyFactory", () => {
         website: null,
         email: null
       };
+
       it("returns instance of Company with randomly generated data", () => {
         const company = CompanyFactory.build(data);
         expect(company).toBeInstanceOf(Company);

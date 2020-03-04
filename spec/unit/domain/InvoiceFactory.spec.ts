@@ -1,3 +1,5 @@
+import { v4 as isUUIDv4 } from "is-uuid";
+
 import { InvoiceFactory } from "../../../domain/factories/InvoiceFactory";
 import { Invoice } from "../../../domain/Invoice";
 import InvoiceStatuses from "../../../domain/lib/InvoiceStatuses";
@@ -58,6 +60,11 @@ describe("InvoiceFactory", () => {
 
     it("returns Invoice aggregate", () => {
       expect(invoice).toBeInstanceOf(Invoice);
+    });
+
+    it("returns Invoice aggregate with invoice with new valid UUID as ID", () => {
+      expect(invoice.id).toBeTruthy("Invoice ID is empty.");
+      expect(isUUIDv4(invoice.id)).toBe(true);
     });
 
     it("returns Invoice aggregate with invoice number as in params", () => {

@@ -4,6 +4,7 @@ import InvoiceStatuses from "./lib/InvoiceStatuses";
 import { InvoiceConstructorParams } from "./lib/interfaces";
 
 export class Invoice {
+  public readonly id: string;
   public readonly invoiceNumber: string;
   public readonly issuedAt: Date;
   public readonly saleDate: Date;
@@ -13,6 +14,7 @@ export class Invoice {
   public readonly status: InvoiceStatuses;
 
   constructor(invoice: InvoiceConstructorParams) {
+    this.id = invoice.invoiceDetails.id;
     this.invoiceNumber = invoice.invoiceDetails.invoiceNumber;
     this.issuedAt = invoice.invoiceDetails.issuedAt;
     this.saleDate = invoice.invoiceDetails.saleDate;
