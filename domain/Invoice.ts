@@ -4,13 +4,13 @@ import InvoiceStatuses from "./lib/InvoiceStatuses";
 import { InvoiceConstructorParams } from "./lib/interfaces";
 
 export class Invoice {
-  private invoiceNumber: string;
-  private issuedAt: Date;
-  private saleDate: Date;
-  private seller: Company;
-  private buyer: Company;
-  private order: Order;
-  private status: InvoiceStatuses;
+  public readonly invoiceNumber: string;
+  public readonly issuedAt: Date;
+  public readonly saleDate: Date;
+  public readonly seller: Company;
+  public readonly buyer: Company;
+  public readonly order: Order;
+  public readonly status: InvoiceStatuses;
 
   constructor(invoice: InvoiceConstructorParams) {
     this.invoiceNumber = invoice.invoiceDetails.invoiceNumber;
