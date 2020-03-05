@@ -1,5 +1,5 @@
-import { CompanyFactory } from "../../../domain/factories/CompanyFactory";
-import { Company } from "../../../domain/Company";
+import { CompanyFactory } from "../../../domain/Invoices/factories/CompanyFactory";
+import { Company } from "../../../domain/Invoices/Company";
 import { v4 as isUUIDv4 } from "is-uuid";
 
 describe("CompanyFactory", () => {

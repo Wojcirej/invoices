@@ -1,7 +1,7 @@
-import { OrderRowFactory } from "../../../domain/factories/OrderRowFactory";
-import { OrderRow } from "../../../domain/OrderRow";
-import { Product } from "../../../domain/Product";
-import { ProductFactory } from "../../../domain/factories/ProductFactory";
+import { OrderRowFactory } from "../../../domain/Invoices/factories/OrderRowFactory";
+import { OrderRow } from "../../../domain/Invoices/OrderRow";
+import { Product } from "../../../domain/Invoices/Product";
+import { ProductFactory } from "../../../domain/Invoices/factories/ProductFactory";
 
 describe("OrderRowFactory", () => {
   describe(".build()", () => {

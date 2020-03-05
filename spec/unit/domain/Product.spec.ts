@@ -1,4 +1,4 @@
-import { ProductFactory } from "../../../domain/factories/ProductFactory";
+import { ProductFactory } from "../../../domain/Invoices/factories/ProductFactory";
 
 describe("Product", () => {
   describe("#calculateGrossPrice", () => {

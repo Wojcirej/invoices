@@ -1,5 +1,5 @@
-import { OrderRow } from "../../../domain/OrderRow";
-import { Product } from "../../../domain/Product";
+import { OrderRow } from "../../../domain/Invoices/OrderRow";
+import { Product } from "../../../domain/Invoices/Product";
 
 describe("OrderRow", () => {
   describe("#calculatePrice", () => {
