@@ -1,11 +1,10 @@
 import fs from "fs";
+import path from "path";
+import { Invoice } from "../Invoice";
 
 export class InvoiceRepository {
-  constructor() {
-  }
-
-  save(invoice: object, path = "/tmp/invoice.json"): boolean {
-    fs.writeFileSync(path, JSON.stringify(invoice, null, 2));
+  save(invoice: Invoice): boolean {
+    fs.writeFileSync(path.join(process.cwd(), `/tmp/db/invoices/${invoice.id}.json`), JSON.stringify(invoice, null, 2));
     return true;
   }
 }

@@ -1,30 +1,12 @@
 import { OrderFactory } from "../../../domain/factories/OrderFactory";
 import { Order } from "../../../domain/Order";
 import { Product } from "../../../domain/Product";
+import { orderPayload } from "../../support/mocks/payloadSamples";
 
 describe("OrderFactory", () => {
   describe(".build", () => {
     describe("when data provided", () => {
-      const data = [
-        {
-          product: {
-            position: 1,
-            name: "Pen",
-            netPrice: 1.99,
-            valueAddedTax: 0.23
-          },
-          quantity: 5
-        },
-        {
-          product: {
-            position: 2,
-            name: "Pencil",
-            netPrice: 0.8,
-            valueAddedTax: 0.23
-          },
-          quantity: 10
-        }
-      ];
+      const data = orderPayload;
 
       it("returns Order instance", () => {
         const order = OrderFactory.build(data);
@@ -72,24 +54,8 @@ describe("OrderFactory", () => {
       });
 
       describe("when position within product is missing", () => {
-        const data = [
-          {
-            product: {
-              name: "Pen",
-              netPrice: 1.99,
-              valueAddedTax: 0.23
-            },
-            quantity: 5
-          },
-          {
-            product: {
-              name: "Pencil",
-              netPrice: 0.8,
-              valueAddedTax: 0.23
-            },
-            quantity: 10
-          }
-        ];
+        const data = orderPayload;
+        data.forEach(orderRow => delete orderRow.product.position);
 
         it("ensures unique position of products across whole order", () => {
           const order = OrderFactory.build(data);
