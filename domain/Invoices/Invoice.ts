@@ -23,4 +23,17 @@ export class Invoice {
     this.buyer = invoice.buyer;
     this.order = invoice.order;
   }
+
+  getStatus(): string {
+    const map = Invoice.statusesMap();
+    return map.get(this.status);
+  }
+
+  private static statusesMap(): Map<number, string> {
+    return new Map<number, string>([
+      [InvoiceStatuses.Added, "Added"],
+      [InvoiceStatuses.Verified, "Verified"],
+      [InvoiceStatuses.Settled, "Settled"]
+    ]);
+  }
 }

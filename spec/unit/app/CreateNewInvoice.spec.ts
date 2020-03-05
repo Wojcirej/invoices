@@ -1,3 +1,8 @@
+import { Invoice } from "../../../domain/Invoices/Invoice";
+import { CreateNewInvoice } from "../../../app/services/CreateNewInvoice";
+import { invoicePayload } from "../../support/mocks/payloadSamples";
+import { InvoiceDto } from "../../../app/dto/InvoiceDto";
+
 class InvoiceInMemoryRepository {
   public readonly invoices;
 
@@ -5,32 +10,37 @@ class InvoiceInMemoryRepository {
     this.invoices = [];
   }
 
-  save(invoice: object): boolean {
+  save(invoice: Invoice): boolean {
     this.invoices.push(invoice);
     return true;
   }
 }
 
-import fs from "fs";
-import { CreateNewInvoice } from "../../../app/services/CreateNewInvoice";
-import { invoicePayload } from "../../support/mocks/payloadSamples";
-
 describe("CreateNewInvoice", () => {
   describe(".call", () => {
-    afterEach(() => {
-      if (fs.existsSync("/tmp/invoice.json")) {
-        fs.unlinkSync("/tmp/invoice.json");
-      }
-    });
-
     const invoiceData = invoicePayload;
+    const repository = new InvoiceInMemoryRepository();
 
     it("creates new Invoice", () => {
-      const repository = new InvoiceInMemoryRepository();
       const invoiceCountBefore = repository.invoices.length;
       CreateNewInvoice.call(invoiceData, repository);
       const invoiceCountAfter = repository.invoices.length;
       expect(invoiceCountAfter).toEqual(invoiceCountBefore + 1);
+    });
+
+    it("returns instance of InvoiceDto", () => {
+      const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
+      expect(createNewInvoiceResult).toBeInstanceOf(InvoiceDto);
+    });
+
+    it("returns InvoiceDto containing ID of the newly created Invoice", () => {
+      const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
+      expect(createNewInvoiceResult.id).toBeTruthy("Invoice ID after create is empty.");
+    });
+
+    it("returns InvoiceDto containing status of the Invoice", () => {
+      const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
+      expect(createNewInvoiceResult.status).toEqual("Added");
     });
   });
 });
