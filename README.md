@@ -1,19 +1,25 @@
 # Invoices
 
-# Development environment setup
+## Development environment setup
 `npm install`
 
-# Run server
-## Development
-Runs server on port specified in `config.json` without transpilation to javascript.
+## Run server
+### Development
+Serves application based on typescript code based on `config.json` configuration file for `dev` environment.
 
 `npm run server:dev`
 
-## Production
-Transpiles typescript to javascript and runs server based on javascript code on port specified in `config.json` file.
+### Production
+Compiles typescript to javascript and serves application based on javascript code based on `config.json` configuration file for `prod` environment.
 
-# Run tests
-`npm test`
+`npm run server:prod`
 
-# Environment variables & application config
-Stored in `config.json` file.
+## Run tests
+`npm test` runs whole test of tests
+
+`npm run test:unit` runs only unit tests
+
+`npm run test:api` runs only API tests
+
+## Environment variables & application config
+Stored in `config.json` file. File contains separate configuration for `dev`, `prod` and `test` environments.
