@@ -10,7 +10,7 @@
     "test:unit": "ENV=test ts-node node_modules/jasmine/bin/jasmine spec/unit/**/*",
     "lint": "eslint **/*.ts",
     "server:dev": "ENV=dev ts-node index.ts",
-    "server:prod": "ENV=prod tsc && node dist/index.js"
+    "server:prod": "tsc && ENV=prod node dist/index.js"
   },
   "author": "Wojciech Bal",
   "license": "ISC",
