@@ -19,30 +19,32 @@ const invoicePayload = {
       email: "email@example.com",
       website: "http://www.example.com"
     },
-    order: [
-      {
-        product: {
-          position: 1,
-          name: "Pen",
-          netPrice: 1.99,
-          valueAddedTax: 0.23
+    order: {
+      orderRows: [
+        {
+          product: {
+            position: 1,
+            name: "Pen",
+            netPrice: 1.99,
+            valueAddedTax: 0.23
+          },
+          quantity: 5
         },
-        quantity: 5
-      },
-      {
-        product: {
-          position: 2,
-          name: "Pencil",
-          netPrice: 0.8,
-          valueAddedTax: 0.23
-        },
-        quantity: 10
-      }
-    ]
+        {
+          product: {
+            position: 2,
+            name: "Pencil",
+            netPrice: 0.8,
+            valueAddedTax: 0.23
+          },
+          quantity: 10
+        }
+      ]
+    }
   }
 };
 
 const orderPayload = invoicePayload.invoice.order;
-const productPayload = invoicePayload.invoice.order[0].product;
+const productPayload = invoicePayload.invoice.order.orderRows[0].product;
 
 export { invoicePayload, orderPayload, productPayload };

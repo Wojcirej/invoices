@@ -4,6 +4,7 @@ import { ProductFactory } from "./ProductFactory";
 
 export class OrderFactory {
   private readonly order;
+
   constructor(data) {
     this.order = data;
   }

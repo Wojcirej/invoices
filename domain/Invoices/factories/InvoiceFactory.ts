@@ -26,7 +26,7 @@ export class InvoiceFactory {
     };
     const seller = CompanyFactory.build(this.invoice.seller);
     const buyer = CompanyFactory.build(this.invoice.buyer);
-    const order = OrderFactory.build(this.invoice.order);
+    const order = OrderFactory.build(this.invoice.order.orderRows);
     return new Invoice({
       invoiceDetails,
       buyer,

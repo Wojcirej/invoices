@@ -73,7 +73,7 @@ describe("InvoiceFactory", () => {
     });
 
     it("returns Invoice aggregate with as much order rows as in params", () => {
-      expect(invoice.order.orderRows.length).toEqual(data.invoice.order.length);
+      expect(invoice.order.orderRows.length).toEqual(data.invoice.order.orderRows.length);
     });
 
     it("returns Invoice aggregate with order rows aggregating Product instances", () => {
@@ -85,23 +85,23 @@ describe("InvoiceFactory", () => {
     it("returns Invoice aggregate with order details as in params", () => {
       invoice.order.orderRows.forEach((orderRow, index) => {
         expect(orderRow.quantity).toEqual(
-          data.invoice.order[index].quantity,
+          data.invoice.order.orderRows[index].quantity,
           `Quantity of order ${index} does not match.`
         );
         expect(orderRow.product.name).toEqual(
-          data.invoice.order[index].product.name,
+          data.invoice.order.orderRows[index].product.name,
           `Name of the product ${index} does not match.`
         );
         expect(orderRow.product.netPrice).toEqual(
-          data.invoice.order[index].product.netPrice,
+          data.invoice.order.orderRows[index].product.netPrice,
           `Net price of the product ${index} does not match.`
         );
         expect(orderRow.product.valueAddedTax).toEqual(
-          data.invoice.order[index].product.valueAddedTax,
+          data.invoice.order.orderRows[index].product.valueAddedTax,
           `Value added tax of the product ${index} does not match.`
         );
         expect(orderRow.product.position).toEqual(
-          data.invoice.order[index].product.position,
+          data.invoice.order.orderRows[index].product.position,
           `Position of the product ${index} does not match.`
         );
       });

@@ -6,7 +6,7 @@ import { orderPayload } from "../../support/mocks/payloadSamples";
 describe("OrderFactory", () => {
   describe(".build", () => {
     describe("when data provided", () => {
-      const data = orderPayload;
+      const data = orderPayload.orderRows;
 
       it("returns Order instance", () => {
         const order = OrderFactory.build(data);
@@ -54,7 +54,7 @@ describe("OrderFactory", () => {
       });
 
       describe("when position within product is missing", () => {
-        const data = orderPayload;
+        const data = orderPayload.orderRows;
         data.forEach(orderRow => delete orderRow.product.position);
 
         it("ensures unique position of products across whole order", () => {
