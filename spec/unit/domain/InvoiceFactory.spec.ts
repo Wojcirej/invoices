@@ -39,7 +39,7 @@ describe("InvoiceFactory", () => {
     });
 
     it("returns Invoice aggregate with added invoice", () => {
-      expect(invoice.status).toEqual(InvoiceStatuses.Added);
+      expect(invoice.status).toEqual(InvoiceStatuses.New);
     });
 
     it("returns Invoice aggregate with buyer as Company instance", () => {

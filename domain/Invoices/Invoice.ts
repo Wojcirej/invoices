@@ -31,7 +31,7 @@ export class Invoice {
 
   private static statusesMap(): Map<number, string> {
     return new Map<number, string>([
-      [InvoiceStatuses.Added, "Added"],
+      [InvoiceStatuses.New, "New"],
       [InvoiceStatuses.Verified, "Verified"],
       [InvoiceStatuses.Settled, "Settled"]
     ]);

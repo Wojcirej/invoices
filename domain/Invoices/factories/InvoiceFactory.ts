@@ -22,7 +22,7 @@ export class InvoiceFactory {
       invoiceNumber: this.invoice.invoiceNumber,
       issuedAt: new Date(this.invoice.issuedAt),
       saleDate: new Date(this.invoice.saleDate),
-      status: InvoiceStatuses.Added
+      status: InvoiceStatuses.New
     };
     const seller = CompanyFactory.build(this.invoice.seller);
     const buyer = CompanyFactory.build(this.invoice.buyer);

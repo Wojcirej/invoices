@@ -40,7 +40,7 @@ describe("CreateNewInvoice", () => {
 
     it("returns InvoiceDto containing status of the Invoice", () => {
       const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
-      expect(createNewInvoiceResult.status).toEqual("Added");
+      expect(createNewInvoiceResult.status).toEqual("New");
     });
   });
 });

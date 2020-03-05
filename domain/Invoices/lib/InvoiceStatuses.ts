@@ -1,5 +1,5 @@
 enum InvoiceStatuses {
-  Added,
+  New,
   Verified,
   Settled
 }
