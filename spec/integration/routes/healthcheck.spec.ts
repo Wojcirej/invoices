@@ -1,4 +1,4 @@
-import { setUpTestServer, baseUrl } from "./../../support/testServer";
+import { baseUrl, setUpTestServer } from "./../../support/testServer";
 import fetch from "node-fetch";
 
 let server;
@@ -14,17 +14,20 @@ describe("Healthcheck router", () => {
 
   describe("GET /app_status", () => {
     const path = `${baseUrl}/app_status`;
+    let response, status, responseBody;
+
+    beforeAll(async () => {
+      response = await fetch(path);
+      status = await response.status;
+      responseBody = await response.json();
+    });
 
     it("returns HTTP 200 status", async () => {
-      const response = await fetch(path);
-      const status = await response.status;
       expect(status).toEqual(200);
     });
 
     it("returns info about HTTP health", async () => {
-      const response = await fetch(path);
-      const body = await response.json();
-      expect(body.status.http).toEqual("Healthy");
+      expect(responseBody.status.http).toEqual("Healthy");
     });
   });
 });
