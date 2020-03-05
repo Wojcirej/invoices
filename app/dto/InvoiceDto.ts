@@ -8,6 +8,6 @@ export class InvoiceDto {
   constructor(invoice: Invoice) {
     this.id = invoice.id;
     this.status = invoice.getStatus();
-    this.message = `Invoice has been created successfully. Status: ${this.status}.`;
+    this.message = "New Invoice has been created successfully.";
   }
 }
