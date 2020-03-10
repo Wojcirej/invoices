@@ -34,6 +34,7 @@ describe("InvoiceRepository", () => {
   describe("#find", () => {
     describe("when Invoice with provided ID exists", () => {
       const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
+      const expectedInvoiceData = JSON.parse(fs.readFileSync(`${repository.path}/${invoiceId}.json`).toString());
 
       it("returns Invoice instance", () => {
         const invoice = repository.find(invoiceId);
@@ -43,6 +44,18 @@ describe("InvoiceRepository", () => {
       it("returns Invoice instance with provided ID", () => {
         const invoice = repository.find(invoiceId);
         expect(invoice.id).toEqual(invoiceId);
+      });
+
+      it("returns Invoice instance with seller as Company instance with the same ID", () => {
+        const invoice = repository.find(invoiceId);
+        const expectedSeller = expectedInvoiceData.seller;
+        expect(invoice.seller.id).toEqual(expectedSeller.id);
+      });
+
+      it("returns Invoice instance with buyer as Company instance with the same ID", () => {
+        const invoice = repository.find(invoiceId);
+        const expectedBuyer = expectedInvoiceData.buyer;
+        expect(invoice.buyer.id).toEqual(expectedBuyer.id);
       });
     });
 

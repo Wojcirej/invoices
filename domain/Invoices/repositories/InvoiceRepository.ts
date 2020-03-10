@@ -6,7 +6,7 @@ import { OrderFactory } from "../factories/OrderFactory";
 import { InvoiceNotFoundError } from "../errors/InvoiceNotFoundError";
 
 export class InvoiceRepository {
-  private readonly path: string;
+  public readonly path: string;
 
   constructor() {
     this.path = path.join(process.cwd(), "/tmp/db/invoices");

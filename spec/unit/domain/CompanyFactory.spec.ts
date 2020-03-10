@@ -1,10 +1,12 @@
 import { CompanyFactory } from "../../../domain/Invoices/factories/CompanyFactory";
 import { Company } from "../../../domain/Invoices/Company";
 import { v4 as isUUIDv4 } from "is-uuid";
+import { v4 as uuid } from "uuid";
 
 describe("CompanyFactory", () => {
   describe(".build()", () => {
     const data = {
+      id: uuid(),
       name: "Name",
       address: "Here",
       taxPayerNumber: "123-456-78",
@@ -18,13 +20,14 @@ describe("CompanyFactory", () => {
       expect(company).toBeInstanceOf(Company);
     });
 
-    it("returns instance of Company with new valid UUID as ID", () => {
-      const company = CompanyFactory.build(data);
-      expect(company.id).toBeTruthy("Company's ID is empty");
-      expect(isUUIDv4(company.id)).toBe(true);
-    });
-
     describe("when any values under acceptable keys passed", () => {
+      it("returns instance of Company with ID as provided UUID", () => {
+        const company = CompanyFactory.build(data);
+        expect(company.id).toBeTruthy("Company's ID is empty");
+        expect(isUUIDv4(company.id)).toBe(true);
+        expect(company.id).toEqual(data.id);
+      });
+
       it("returns instance of Company with passed data", () => {
         const company = CompanyFactory.build(data);
         expect(company.name).toEqual(data.name);
@@ -38,6 +41,7 @@ describe("CompanyFactory", () => {
 
     describe("when no truthy values passed", () => {
       const data = {
+        id: null,
         name: null,
         address: null,
         taxPayerNumber: null,
@@ -45,6 +49,12 @@ describe("CompanyFactory", () => {
         website: null,
         email: null
       };
+
+      it("returns instance of Company with randomly generated valid UUID", () => {
+        const company = CompanyFactory.build(data);
+        expect(company.id).toBeTruthy("Company's ID is empty");
+        expect(isUUIDv4(company.id)).toBe(true);
+      });
 
       it("returns instance of Company with randomly generated data", () => {
         const company = CompanyFactory.build(data);
