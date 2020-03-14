@@ -1,4 +1,4 @@
-import { baseUrl, setUpTestServer } from "./../../support/testServer";
+import { baseUrl, setUpTestServer } from "../../support/testServer";
 import fetch from "node-fetch";
 
 let server;

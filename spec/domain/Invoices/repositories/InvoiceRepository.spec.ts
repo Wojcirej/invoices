@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 
-import { Invoice } from "../../../domain/Invoices/Invoice";
-import { InvoiceRepository } from "../../../domain/Invoices/repositories/InvoiceRepository";
-import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
-import { invoicePayload } from "../../support/mocks/payloadSamples";
+import { Invoice } from "../../../../domain/Invoices/Invoice";
+import { InvoiceRepository } from "../../../../domain/Invoices/repositories/InvoiceRepository";
+import { InvoiceFactory } from "../../../../domain/Invoices/factories/InvoiceFactory";
+import { invoicePayload } from "../../../support/mocks/payloadSamples";
 
 describe("InvoiceRepository", () => {
   const repository = new InvoiceRepository();

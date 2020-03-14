@@ -1,5 +1,5 @@
 import httpMocks from "node-mocks-http";
-import { getInvoice } from "../../../app/actions/Invoices/getInvoice";
+import { getInvoice } from "../../../../app/actions/Invoices/getInvoice";
 
 describe("getInvoice", () => {
   describe("when Invoice with provided ID exists", () => {

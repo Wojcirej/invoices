@@ -1,7 +1,7 @@
-import { OrderFactory } from "../../../domain/Invoices/factories/OrderFactory";
-import { Order } from "../../../domain/Invoices/Order";
-import { Product } from "../../../domain/Invoices/Product";
-import { orderPayload } from "../../support/mocks/payloadSamples";
+import { OrderFactory } from "../../../../domain/Invoices/factories/OrderFactory";
+import { Order } from "../../../../domain/Invoices/Order";
+import { Product } from "../../../../domain/Invoices/Product";
+import { orderPayload } from "../../../support/mocks/payloadSamples";
 
 describe("OrderFactory", () => {
   describe(".build", () => {

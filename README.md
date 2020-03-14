@@ -45,8 +45,6 @@ Clean up docker system (all stopped containers, all dangling images, and all unu
 ## Run tests
 `npm test` runs whole test of tests
 
-`npm run test:unit` runs only unit tests
-
 `npm run test:api` runs only API tests
 
 ## Environment variables & application config

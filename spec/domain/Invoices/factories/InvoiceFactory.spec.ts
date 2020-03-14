@@ -1,12 +1,12 @@
 import { v4 as isUUIDv4 } from "is-uuid";
 
-import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
-import { Invoice } from "../../../domain/Invoices/Invoice";
-import InvoiceStatuses from "../../../domain/Invoices/lib/InvoiceStatuses";
-import { Company } from "../../../domain/Invoices/Company";
-import { Order } from "../../../domain/Invoices/Order";
-import { Product } from "../../../domain/Invoices/Product";
-import { invoicePayload } from "../../support/mocks/payloadSamples";
+import { InvoiceFactory } from "../../../../domain/Invoices/factories/InvoiceFactory";
+import { Invoice } from "../../../../domain/Invoices/Invoice";
+import InvoiceStatuses from "../../../../domain/Invoices/lib/InvoiceStatuses";
+import { Company } from "../../../../domain/Invoices/Company";
+import { Order } from "../../../../domain/Invoices/Order";
+import { Product } from "../../../../domain/Invoices/Product";
+import { invoicePayload } from "../../../support/mocks/payloadSamples";
 
 describe("InvoiceFactory", () => {
   const data = JSON.parse(JSON.stringify(invoicePayload));

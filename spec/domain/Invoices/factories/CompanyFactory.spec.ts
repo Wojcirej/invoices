@@ -1,5 +1,5 @@
-import { CompanyFactory } from "../../../domain/Invoices/factories/CompanyFactory";
-import { Company } from "../../../domain/Invoices/Company";
+import { CompanyFactory } from "../../../../domain/Invoices/factories/CompanyFactory";
+import { Company } from "../../../../domain/Invoices/Company";
 import { v4 as isUUIDv4 } from "is-uuid";
 import { v4 as uuid } from "uuid";
 

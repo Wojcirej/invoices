@@ -1,6 +1,6 @@
 import httpMocks from "node-mocks-http";
-import { postNewInvoice } from "../../../app/actions/Invoices/postNewInvoice";
-import { invoicePayload } from "../../support/mocks/payloadSamples";
+import { postNewInvoice } from "../../../../app/actions/Invoices/postNewInvoice";
+import { invoicePayload } from "../../../support/mocks/payloadSamples";
 
 describe("postNewInvoice", () => {
   const mockRequest = httpMocks.createRequest({
