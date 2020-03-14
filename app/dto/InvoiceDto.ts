@@ -1,7 +1,6 @@
 import { Invoice } from "../../domain/Invoices/Invoice";
 
 export class InvoiceDto {
-  private readonly invoice: Invoice;
   public readonly id: string;
   public readonly invoiceNumber: string;
   public readonly status: string;
@@ -9,7 +8,6 @@ export class InvoiceDto {
   public readonly saleDate: number;
 
   constructor(invoice: Invoice) {
-    this.invoice = invoice;
     this.id = invoice.id;
     this.invoiceNumber = invoice.invoiceNumber;
     this.status = invoice.getStatus();

@@ -115,4 +115,27 @@ describe("Invoices router", () => {
       });
     });
   });
+
+  describe("GET /invoices", () => {
+    const path = `${baseUrl}/invoices/`;
+
+    beforeAll(async () => {
+      response = await fetch(path, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      });
+      status = await response.status;
+      responseBody = await response.json();
+    });
+
+    it("responds with HTTP 200 status", () => {
+      expect(status).toEqual(200);
+    });
+
+    it("responds with list of all existing Invoices", () => {
+      const expectedInvoiceIds = repository.findAll().map(invoice => invoice.id);
+      const receivedInvoiceIds = responseBody.map(invoice => invoice.id);
+      expect(expectedInvoiceIds).toEqual(receivedInvoiceIds);
+    });
+  });
 });
