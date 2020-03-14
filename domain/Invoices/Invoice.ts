@@ -24,6 +24,10 @@ export class Invoice {
     this.order = invoice.order;
   }
 
+  canBeEdited(): boolean {
+    return this.status === InvoiceStatuses.New;
+  }
+
   getStatus(): string {
     const map = Invoice.statusesMap();
     return map.get(this.status);

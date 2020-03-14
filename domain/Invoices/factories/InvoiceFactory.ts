@@ -18,14 +18,14 @@ export class InvoiceFactory {
 
   build(): Invoice {
     const invoiceDetails = {
-      id: uuid(),
+      id: this.invoice.id || uuid(),
       invoiceNumber: this.invoice.invoiceNumber,
       issuedAt: new Date(this.invoice.issuedAt),
       saleDate: new Date(this.invoice.saleDate),
-      status: InvoiceStatuses.New
+      status: this.invoice.status || InvoiceStatuses.New
     };
-    const seller = CompanyFactory.build(this.invoice.seller);
-    const buyer = CompanyFactory.build(this.invoice.buyer);
+    const seller = CompanyFactory.build(this.invoice.seller || {});
+    const buyer = CompanyFactory.build(this.invoice.buyer || {});
     const order = OrderFactory.build(this.invoice.order.orderRows);
     return new Invoice({
       invoiceDetails,
