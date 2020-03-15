@@ -18,7 +18,6 @@ describe("getInvoice", () => {
     });
 
     it("returns Invoice with requested ID", () => {
-      console.log(actualResponseBody);
       expect(actualResponseBody.id).toEqual(invoiceId);
     });
   });
