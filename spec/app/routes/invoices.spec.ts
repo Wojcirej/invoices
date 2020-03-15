@@ -138,4 +138,78 @@ describe("Invoices router", () => {
       expect(expectedInvoiceIds).toEqual(receivedInvoiceIds);
     });
   });
+
+  describe("PATCH /invoices/:id", () => {
+    describe("when Invoice with requested ID exists", () => {
+      describe("when Invoice can be edited", () => {
+        const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
+        const path = `${baseUrl}/invoices/${invoiceId}`;
+
+        beforeAll(async () => {
+          response = await fetch(path, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({})
+          });
+          status = await response.status;
+          responseBody = await response.json();
+        });
+
+        it("responds with HTTP 200 status", () => {
+          expect(status).toEqual(200);
+        });
+
+        it("responds with requested Invoice id", () => {
+          expect(responseBody.id).toEqual(invoiceId);
+        });
+      });
+
+      describe("when Invoice cannot be edited", () => {
+        const invoiceId = "0c618531-7101-40cf-9218-5dbee6fdfd93";
+        const path = `${baseUrl}/invoices/${invoiceId}`;
+
+        beforeAll(async () => {
+          response = await fetch(path, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({})
+          });
+          status = await response.status;
+          responseBody = await response.json();
+        });
+
+        it("responds with HTTP 400 status", () => {
+          expect(status).toEqual(400);
+        });
+
+        it("responds with message about Invoice not possible to be edited", () => {
+          expect(responseBody.message).toEqual(
+            `Invoice with ID ${invoiceId} cannot be edited - it's already Verified and only new Invoices can be edited.`
+          );
+        });
+      });
+    });
+
+    describe("when Invoice with requested ID does not exist", () => {
+      const invoiceId = "0";
+      const path = `${baseUrl}/invoices/${invoiceId}`;
+
+      beforeAll(async () => {
+        response = await fetch(path, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" }
+        });
+        status = await response.status;
+        responseBody = await response.json();
+      });
+
+      it("responds with HTTP 400 status", () => {
+        expect(status).toEqual(400);
+      });
+
+      it("responds with message about Invoice not found", () => {
+        expect(responseBody.message).toEqual(`Invoice with id ${invoiceId} does not exist.`);
+      });
+    });
+  });
 });
