@@ -33,29 +33,29 @@ describe("InvoiceRepository", () => {
 
   describe("#find", () => {
     describe("when Invoice with provided ID exists", () => {
-      const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
-      const expectedInvoiceData = JSON.parse(fs.readFileSync(`${repository.path}/${invoiceId}.json`).toString());
+      const invoice = InvoiceFactory.buildInDb(invoicePayload, repository);
+      const expectedInvoiceData = JSON.parse(fs.readFileSync(`${repository.path}/${invoice.id}.json`).toString());
 
       it("returns Invoice instance", () => {
-        const invoice = repository.find(invoiceId);
-        expect(invoice).toBeInstanceOf(Invoice);
+        const foundInvoice = repository.find(invoice.id);
+        expect(foundInvoice).toBeInstanceOf(Invoice);
       });
 
       it("returns Invoice instance with provided ID", () => {
-        const invoice = repository.find(invoiceId);
-        expect(invoice.id).toEqual(invoiceId);
+        const foundInvoice = repository.find(invoice.id);
+        expect(foundInvoice.id).toEqual(invoice.id);
       });
 
       it("returns Invoice instance with seller as Company instance with the same ID", () => {
-        const invoice = repository.find(invoiceId);
+        const foundInvoice = repository.find(invoice.id);
         const expectedSeller = expectedInvoiceData.seller;
-        expect(invoice.seller.id).toEqual(expectedSeller.id);
+        expect(foundInvoice.seller.id).toEqual(expectedSeller.id);
       });
 
       it("returns Invoice instance with buyer as Company instance with the same ID", () => {
-        const invoice = repository.find(invoiceId);
+        const foundInvoice = repository.find(invoice.id);
         const expectedBuyer = expectedInvoiceData.buyer;
-        expect(invoice.buyer.id).toEqual(expectedBuyer.id);
+        expect(foundInvoice.buyer.id).toEqual(expectedBuyer.id);
       });
     });
 

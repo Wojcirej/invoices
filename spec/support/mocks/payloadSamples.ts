@@ -3,6 +3,7 @@ const invoicePayload = {
     invoiceNumber: "FV 1/03/2020",
     issuedAt: new Date().getTime(),
     saleDate: new Date().getTime(),
+    status: undefined,
     seller: {
       name: "Selling Company",
       address: "Wonderland",

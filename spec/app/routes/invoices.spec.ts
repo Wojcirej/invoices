@@ -3,6 +3,8 @@ import fetch from "node-fetch";
 import { baseUrl, setUpTestServer } from "../../support/testServer";
 import { invoicePayload } from "../../support/mocks/payloadSamples";
 import { InvoiceRepository } from "../../../domain/Invoices/repositories/InvoiceRepository";
+import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
+import InvoiceStatuses from "../../../domain/Invoices/lib/InvoiceStatuses";
 
 let server, response, status, responseBody;
 const repository = new InvoiceRepository();
@@ -52,9 +54,8 @@ describe("Invoices router", () => {
 
   describe("GET /invoices/:id", () => {
     describe("when Invoice with requested ID exists", () => {
-      const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
-      const invoice = repository.find(invoiceId);
-      const path = `${baseUrl}/invoices/${invoiceId}`;
+      const invoice = InvoiceFactory.buildInDb(invoicePayload, repository);
+      const path = `${baseUrl}/invoices/${invoice.id}`;
 
       beforeAll(async () => {
         response = await fetch(path, {
@@ -142,8 +143,10 @@ describe("Invoices router", () => {
   describe("PATCH /invoices/:id", () => {
     describe("when Invoice with requested ID exists", () => {
       describe("when Invoice can be edited", () => {
-        const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
-        const path = `${baseUrl}/invoices/${invoiceId}`;
+        const data = Object.assign({}, invoicePayload);
+        data.invoice.status = InvoiceStatuses.New;
+        const invoice = InvoiceFactory.buildInDb(data, new InvoiceRepository());
+        const path = `${baseUrl}/invoices/${invoice.id}`;
 
         beforeAll(async () => {
           response = await fetch(path, {
@@ -160,13 +163,15 @@ describe("Invoices router", () => {
         });
 
         it("responds with requested Invoice id", () => {
-          expect(responseBody.id).toEqual(invoiceId);
+          expect(responseBody.id).toEqual(invoice.id);
         });
       });
 
       describe("when Invoice cannot be edited", () => {
-        const invoiceId = "0c618531-7101-40cf-9218-5dbee6fdfd93";
-        const path = `${baseUrl}/invoices/${invoiceId}`;
+        const data = Object.assign({}, invoicePayload);
+        data.invoice.status = InvoiceStatuses.Verified;
+        const invoice = InvoiceFactory.buildInDb(data, new InvoiceRepository());
+        const path = `${baseUrl}/invoices/${invoice.id}`;
 
         beforeAll(async () => {
           response = await fetch(path, {
@@ -184,7 +189,7 @@ describe("Invoices router", () => {
 
         it("responds with message about Invoice not possible to be edited", () => {
           expect(responseBody.message).toEqual(
-            `Invoice with ID ${invoiceId} cannot be edited - it's already Verified and only new Invoices can be edited.`
+            `Invoice with ID ${invoice.id} cannot be edited - it's already Verified and only new Invoices can be edited.`
           );
         });
       });

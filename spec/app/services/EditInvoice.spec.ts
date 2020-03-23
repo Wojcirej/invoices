@@ -1,6 +1,9 @@
 import { InvoiceRepository } from "../../../domain/Invoices/repositories/InvoiceRepository";
 import { EditInvoice } from "../../../app/services/EditInvoice";
 import { InvoiceDto } from "../../../app/dto/InvoiceDto";
+import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
+import { invoicePayload } from "../../support/mocks/payloadSamples";
+import InvoiceStatuses from "../../../domain/Invoices/lib/InvoiceStatuses";
 
 describe("EditInvoice", () => {
   const repository = new InvoiceRepository();
@@ -20,26 +23,30 @@ describe("EditInvoice", () => {
 
   describe("when Invoice with requested ID exists", () => {
     describe("when Invoice cannot be edited", () => {
-      const invoiceId = "0c618531-7101-40cf-9218-5dbee6fdfd93";
+      const data = Object.assign({}, invoicePayload);
+      data.invoice.status = InvoiceStatuses.Verified;
+      const invoice = InvoiceFactory.buildInDb(data, repository);
 
       it("throws CannotEditInvoiceError", () => {
         try {
-          EditInvoice.call(invoiceId, {}, repository);
+          EditInvoice.call(invoice.id, {}, repository);
         } catch (error) {
           expect(error.name).toEqual("CannotEditInvoiceError");
           expect(error.message).toEqual(
-            `Invoice with ID ${invoiceId} cannot be edited - it's already Verified and only new Invoices can be edited.`
+            `Invoice with ID ${invoice.id} cannot be edited - it's already Verified and only new Invoices can be edited.`
           );
         }
       });
     });
 
     describe("when Invoice can be edited", () => {
-      const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
+      const data = Object.assign({}, invoicePayload);
+      data.invoice.status = InvoiceStatuses.New;
+      const invoice = InvoiceFactory.buildInDb(data, repository);
       let result;
 
       beforeAll(() => {
-        result = EditInvoice.call(invoiceId, {}, repository);
+        result = EditInvoice.call(invoice.id, {}, repository);
       });
 
       it("returns InvoiceDto instance", () => {
@@ -47,7 +54,7 @@ describe("EditInvoice", () => {
       });
 
       it("returns InvoiceDto instance with ID as in params", () => {
-        expect(result.id).toEqual(invoiceId);
+        expect(result.id).toEqual(invoice.id);
       });
     });
   });

@@ -1,18 +1,19 @@
 import { InvoiceRepository } from "../../../domain/Invoices/repositories/InvoiceRepository";
 import { GetInvoice } from "../../../app/services/GetInvoice";
 import { InvoiceDto } from "../../../app/dto/InvoiceDto";
+import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
+import { invoicePayload } from "../../support/mocks/payloadSamples";
 
 describe("GetInvoice", () => {
   describe(".call", () => {
     const repository = new InvoiceRepository();
 
     describe("when Invoice with provided ID exists", () => {
-      const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
-      const invoice = repository.find(invoiceId);
+      const invoice = InvoiceFactory.buildInDb(invoicePayload, repository);
       let result;
 
       beforeAll(() => {
-        result = GetInvoice.call(invoiceId, repository);
+        result = GetInvoice.call(invoice.id, repository);
       });
 
       it("returns InvoiceDto instance", () => {

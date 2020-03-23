@@ -1,13 +1,16 @@
 import httpMocks from "node-mocks-http";
 import { getInvoice } from "../../../../app/actions/Invoices/getInvoice";
+import { InvoiceFactory } from "../../../../domain/Invoices/factories/InvoiceFactory";
+import { invoicePayload } from "../../../support/mocks/payloadSamples";
+import { InvoiceRepository } from "../../../../domain/Invoices/repositories/InvoiceRepository";
 
 describe("getInvoice", () => {
   describe("when Invoice with provided ID exists", () => {
-    const invoiceId = "0a0c0a14-c537-44bb-9716-5e181a47d977";
+    const invoice = InvoiceFactory.buildInDb(invoicePayload, new InvoiceRepository());
     const mockRequest = httpMocks.createRequest({
       method: "GET",
       url: "/invoices/:id",
-      params: { id: invoiceId }
+      params: { id: invoice.id }
     });
     const mockResponse = httpMocks.createResponse();
     let actualResponseBody;
@@ -18,7 +21,7 @@ describe("getInvoice", () => {
     });
 
     it("returns Invoice with requested ID", () => {
-      expect(actualResponseBody.id).toEqual(invoiceId);
+      expect(actualResponseBody.id).toEqual(invoice.id);
     });
   });
 

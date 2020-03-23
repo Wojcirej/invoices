@@ -11,7 +11,7 @@ export class Invoice {
   public readonly seller: Company;
   public readonly buyer: Company;
   public readonly order: Order;
-  public readonly status: InvoiceStatuses;
+  public status: InvoiceStatuses;
 
   constructor(invoice: InvoiceConstructorParams) {
     this.id = invoice.invoiceDetails.id;

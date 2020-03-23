@@ -16,6 +16,10 @@ export class InvoiceFactory {
     return new InvoiceFactory(data).build();
   }
 
+  static buildInDb(data, repository): Invoice {
+    return new InvoiceFactory(data).buildInDb(repository);
+  }
+
   build(): Invoice {
     const invoiceDetails = {
       id: this.invoice.id || uuid(),
@@ -33,5 +37,11 @@ export class InvoiceFactory {
       seller,
       order
     });
+  }
+
+  buildInDb(repository): Invoice {
+    const invoice = this.build();
+    repository.save(invoice);
+    return invoice;
   }
 }
