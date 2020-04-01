@@ -5,11 +5,13 @@ import bodyParser from "body-parser";
 import { router as defaultRouter } from "./routes/default";
 import { router as healthCheckRouter } from "./routes/healthcheck";
 import { router as invoicesRouter } from "./routes/invoices";
+import { ensureJSONMediaType } from "./middleware/ensureJSONMediaType";
 
 const app = express();
 
 app.use(morgan("combined"));
 app.use(bodyParser.json());
+app.use(ensureJSONMediaType);
 
 app.use("/app_status", healthCheckRouter);
 app.use("/invoices", invoicesRouter);

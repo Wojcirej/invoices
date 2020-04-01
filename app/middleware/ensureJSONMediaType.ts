@@ -18,11 +18,8 @@ const unsupportedMediaTypeResponse = {
 };
 
 export const ensureJSONMediaType = async (req, res, next) => {
-  if (isGetRequest(req.method)) {
-    if (isInvalidContentType(req.headers["content-type"])) {
-      res.status(415).json(unsupportedMediaTypeResponse);
-    }
-  } else {
+  if (!isGetRequest(req.method)) {
+    console.log(isInvalidContentType(req.headers["content-type"]) && isParsedRequestBody(req));
     if (isInvalidContentType(req.headers["content-type"]) && isParsedRequestBody(req)) {
       res.status(415).json(unsupportedMediaTypeResponse);
     }

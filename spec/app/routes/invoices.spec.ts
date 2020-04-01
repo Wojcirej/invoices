@@ -5,9 +5,12 @@ import { invoicePayload } from "../../support/mocks/payloadSamples";
 import { InvoiceRepository } from "../../../domain/Invoices/repositories/InvoiceRepository";
 import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
 import InvoiceStatuses from "../../../domain/Invoices/lib/InvoiceStatuses";
+import { itBehavesLikeEndpointEnforcingContentTypeJson } from "../../support/sharedExamples";
+import { validHeaders } from "../../support/validHeaders";
 
 let server, response, status, responseBody;
 const repository = new InvoiceRepository();
+const headers = validHeaders.contentType;
 
 describe("Invoices router", () => {
   beforeAll(() => {
@@ -21,6 +24,29 @@ describe("Invoices router", () => {
   describe("POST /invoices/new", () => {
     const path = `${baseUrl}/invoices/new`;
 
+    describe("it behaves like endpoint enforcing content type JSON", () => {
+      describe("when Content-Type header is NOT set to application/json", () => {
+        beforeAll(async () => {
+          response = await fetch(path, {
+            method: "POST",
+            headers: { "Content-Type": "application/pdf" }
+          });
+          status = await response.status;
+          responseBody = await response.json();
+        });
+
+        it("responds with HTTP 415 status", () => {
+          expect(status).toEqual(415);
+        });
+
+        it("responds with message about not supported media type", () => {
+          expect(responseBody.message).toEqual(
+            "Unsupported media type - please make sure you have set 'Content-Type' header to 'application/json'."
+          );
+        });
+      });
+    });
+
     describe("when valid request", () => {
       const data = invoicePayload;
 
@@ -28,7 +54,7 @@ describe("Invoices router", () => {
         response = await fetch(path, {
           method: "POST",
           body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" }
+          headers
         });
         status = await response.status;
         responseBody = await response.json();
@@ -60,7 +86,7 @@ describe("Invoices router", () => {
       beforeAll(async () => {
         response = await fetch(path, {
           method: "GET",
-          headers: { "Content-Type": "application/json" }
+          headers
         });
         status = await response.status;
         responseBody = await response.json();
@@ -101,7 +127,7 @@ describe("Invoices router", () => {
       beforeAll(async () => {
         response = await fetch(path, {
           method: "GET",
-          headers: { "Content-Type": "application/json" }
+          headers
         });
         status = await response.status;
         responseBody = await response.json();
@@ -148,10 +174,12 @@ describe("Invoices router", () => {
         const invoice = InvoiceFactory.buildInDb(data, new InvoiceRepository());
         const path = `${baseUrl}/invoices/${invoice.id}`;
 
+        itBehavesLikeEndpointEnforcingContentTypeJson(path, "PATCH");
+
         beforeAll(async () => {
           response = await fetch(path, {
             method: "PATCH",
-            headers: { "Content-Type": "application/json" },
+            headers,
             body: JSON.stringify({})
           });
           status = await response.status;
