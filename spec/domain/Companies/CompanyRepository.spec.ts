@@ -1,5 +1,4 @@
 import fs from "fs";
-import path from "path";
 
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
 import { invoicePayload } from "../../support/mocks/payloadSamples";
