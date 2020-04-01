@@ -1,5 +1,5 @@
-import { ProductFactory } from "../../../domain/Invoices/factories/ProductFactory";
-import { Product } from "../../../domain/Invoices/Product";
+import { ProductFactory } from "../../../../domain/Invoices/factories/ProductFactory";
+import { Product } from "../../../../domain/Invoices/Product";
 
 describe("ProductFactory", () => {
   describe(".build()", () => {

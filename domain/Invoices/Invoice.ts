@@ -11,7 +11,7 @@ export class Invoice {
   public readonly seller: Company;
   public readonly buyer: Company;
   public readonly order: Order;
-  public readonly status: InvoiceStatuses;
+  public status: InvoiceStatuses;
 
   constructor(invoice: InvoiceConstructorParams) {
     this.id = invoice.invoiceDetails.id;
@@ -22,6 +22,10 @@ export class Invoice {
     this.seller = invoice.seller;
     this.buyer = invoice.buyer;
     this.order = invoice.order;
+  }
+
+  canBeEdited(): boolean {
+    return this.status === InvoiceStatuses.New;
   }
 
   getStatus(): string {

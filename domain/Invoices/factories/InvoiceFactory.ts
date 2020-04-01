@@ -16,16 +16,20 @@ export class InvoiceFactory {
     return new InvoiceFactory(data).build();
   }
 
+  static buildInDb(data, repository): Invoice {
+    return new InvoiceFactory(data).buildInDb(repository);
+  }
+
   build(): Invoice {
     const invoiceDetails = {
-      id: uuid(),
+      id: this.invoice.id || uuid(),
       invoiceNumber: this.invoice.invoiceNumber,
       issuedAt: new Date(this.invoice.issuedAt),
       saleDate: new Date(this.invoice.saleDate),
-      status: InvoiceStatuses.New
+      status: this.invoice.status || InvoiceStatuses.New
     };
-    const seller = CompanyFactory.build(this.invoice.seller);
-    const buyer = CompanyFactory.build(this.invoice.buyer);
+    const seller = CompanyFactory.build(this.invoice.seller || {});
+    const buyer = CompanyFactory.build(this.invoice.buyer || {});
     const order = OrderFactory.build(this.invoice.order.orderRows);
     return new Invoice({
       invoiceDetails,
@@ -33,5 +37,11 @@ export class InvoiceFactory {
       seller,
       order
     });
+  }
+
+  buildInDb(repository): Invoice {
+    const invoice = this.build();
+    repository.save(invoice);
+    return invoice;
   }
 }

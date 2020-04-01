@@ -1,6 +1,6 @@
 import { Invoice } from "../../domain/Invoices/Invoice";
 import { InvoiceFactory } from "../../domain/Invoices/factories/InvoiceFactory";
-import { InvoiceDto } from "../dto/InvoiceDto";
+import { NewInvoiceDto } from "../dto/NewInvoiceDto";
 
 export class CreateNewInvoice {
   private readonly invoice: Invoice;
@@ -11,14 +11,14 @@ export class CreateNewInvoice {
     this.invoiceRepository = invoiceRepository;
   }
 
-  static call(data, invoiceRepository): InvoiceDto {
+  static call(data, invoiceRepository): NewInvoiceDto {
     return new CreateNewInvoice(data, invoiceRepository).call();
   }
 
-  call(): InvoiceDto {
+  call(): NewInvoiceDto {
     const invoiceSaveSuccess = this.invoiceRepository.save(this.invoice);
     if (invoiceSaveSuccess) {
-      return new InvoiceDto(this.invoice);
+      return new NewInvoiceDto(this.invoice);
     }
   }
 }

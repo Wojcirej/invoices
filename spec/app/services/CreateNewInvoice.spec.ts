@@ -1,7 +1,7 @@
 import { Invoice } from "../../../domain/Invoices/Invoice";
 import { CreateNewInvoice } from "../../../app/services/CreateNewInvoice";
 import { invoicePayload } from "../../support/mocks/payloadSamples";
-import { InvoiceDto } from "../../../app/dto/InvoiceDto";
+import { NewInvoiceDto } from "../../../app/dto/NewInvoiceDto";
 
 class InvoiceInMemoryRepository {
   public readonly invoices;
@@ -28,17 +28,17 @@ describe("CreateNewInvoice", () => {
       expect(invoiceCountAfter).toEqual(invoiceCountBefore + 1);
     });
 
-    it("returns instance of InvoiceDto", () => {
+    it("returns instance of NewInvoiceDto", () => {
       const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
-      expect(createNewInvoiceResult).toBeInstanceOf(InvoiceDto);
+      expect(createNewInvoiceResult).toBeInstanceOf(NewInvoiceDto);
     });
 
-    it("returns InvoiceDto containing ID of the newly created Invoice", () => {
+    it("returns NewInvoiceDto containing ID of the newly created Invoice", () => {
       const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
       expect(createNewInvoiceResult.id).toBeTruthy("Invoice ID after create is empty.");
     });
 
-    it("returns InvoiceDto containing status of the Invoice", () => {
+    it("returns NewInvoiceDto containing status of the Invoice", () => {
       const createNewInvoiceResult = CreateNewInvoice.call(invoiceData, repository);
       expect(createNewInvoiceResult.status).toEqual("New");
     });

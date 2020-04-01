@@ -4,6 +4,7 @@ import { v4 as uuid } from "uuid";
 import { Company } from "../Company";
 
 export class CompanyFactory {
+  private readonly id: string;
   private readonly name: string;
   private readonly address: string;
   private readonly taxPayerNumber: string;
@@ -12,6 +13,7 @@ export class CompanyFactory {
   private readonly email: string;
 
   constructor(data) {
+    this.id = data.id || uuid();
     this.name = data.name || faker.company.companyName();
     this.address = data.address || faker.address.country();
     this.taxPayerNumber = data.taxPayerNumber || "123-45-67-819";
@@ -26,7 +28,7 @@ export class CompanyFactory {
 
   build(): Company {
     return new Company({
-      id: uuid(),
+      id: this.id,
       name: this.name,
       address: this.address,
       taxPayerNumber: this.taxPayerNumber,
