@@ -1,7 +1,8 @@
 const errorMappings = (message: string) => {
   return {
     InvoiceNotFoundError: { status: 404, message },
-    CannotEditInvoiceError: { status: 422, message }
+    CannotEditInvoiceError: { status: 422, message },
+    CompanyNotFoundError: { status: 404, message }
   };
 };
 

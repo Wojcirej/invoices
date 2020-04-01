@@ -8,7 +8,7 @@ export class CompanyRepository {
   public readonly path: string;
 
   constructor() {
-    this.path = path.join(process.cwd(), "/tmp/db/companies");
+    this.path = path.join(process.cwd(), "/tmp/db/Companies");
   }
 
   save(company: Company): boolean {
