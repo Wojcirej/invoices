@@ -23,10 +23,6 @@ describe("deleteCompany", () => {
       actualResponseBody = JSON.parse(mockResponse._getData());
     });
 
-    afterAll(() => {
-      repository.destroy(companyId);
-    });
-
     it("returns Company with requested ID", () => {
       expect(actualResponseBody.id).toEqual(companyId);
     });
