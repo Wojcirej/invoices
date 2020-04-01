@@ -5,9 +5,12 @@ import { invoicePayload } from "../../support/mocks/payloadSamples";
 import { InvoiceRepository } from "../../../domain/Invoices/repositories/InvoiceRepository";
 import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
 import InvoiceStatuses from "../../../domain/Invoices/lib/InvoiceStatuses";
+import { itBehavesLikeEndpointEnforcingContentTypeJson } from "../../support/sharedExamples";
+import { validHeaders } from "../../support/validHeaders";
 
 let server, response, status, responseBody;
 const repository = new InvoiceRepository();
+const headers = validHeaders.contentType;
 
 describe("Invoices router", () => {
   beforeAll(() => {
@@ -21,6 +24,8 @@ describe("Invoices router", () => {
   describe("POST /invoices/new", () => {
     const path = `${baseUrl}/invoices/new`;
 
+    itBehavesLikeEndpointEnforcingContentTypeJson(path, "POST");
+
     describe("when valid request", () => {
       const data = invoicePayload;
 
@@ -28,7 +33,7 @@ describe("Invoices router", () => {
         response = await fetch(path, {
           method: "POST",
           body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" }
+          headers
         });
         status = await response.status;
         responseBody = await response.json();
@@ -60,7 +65,7 @@ describe("Invoices router", () => {
       beforeAll(async () => {
         response = await fetch(path, {
           method: "GET",
-          headers: { "Content-Type": "application/json" }
+          headers
         });
         status = await response.status;
         responseBody = await response.json();
@@ -101,7 +106,7 @@ describe("Invoices router", () => {
       beforeAll(async () => {
         response = await fetch(path, {
           method: "GET",
-          headers: { "Content-Type": "application/json" }
+          headers
         });
         status = await response.status;
         responseBody = await response.json();
@@ -148,10 +153,12 @@ describe("Invoices router", () => {
         const invoice = InvoiceFactory.buildInDb(data, new InvoiceRepository());
         const path = `${baseUrl}/invoices/${invoice.id}`;
 
+        itBehavesLikeEndpointEnforcingContentTypeJson(path, "PATCH");
+
         beforeAll(async () => {
           response = await fetch(path, {
             method: "PATCH",
-            headers: { "Content-Type": "application/json" },
+            headers,
             body: JSON.stringify({})
           });
           status = await response.status;
