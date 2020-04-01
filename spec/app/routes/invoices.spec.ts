@@ -183,8 +183,8 @@ describe("Invoices router", () => {
           responseBody = await response.json();
         });
 
-        it("responds with HTTP 400 status", () => {
-          expect(status).toEqual(400);
+        it("responds with HTTP 422 status", () => {
+          expect(status).toEqual(422);
         });
 
         it("responds with message about Invoice not possible to be edited", () => {
@@ -208,8 +208,8 @@ describe("Invoices router", () => {
         responseBody = await response.json();
       });
 
-      it("responds with HTTP 400 status", () => {
-        expect(status).toEqual(400);
+      it("responds with HTTP 404 status", () => {
+        expect(status).toEqual(404);
       });
 
       it("responds with message about Invoice not found", () => {
