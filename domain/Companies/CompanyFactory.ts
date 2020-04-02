@@ -22,7 +22,7 @@ export class CompanyFactory {
     this.email = data.email || faker.internet.email();
   }
 
-  static build(data): Company {
+  static build(data = {}): Company {
     return new CompanyFactory(data).build();
   }
 

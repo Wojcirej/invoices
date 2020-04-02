@@ -2,12 +2,12 @@ import { CompanyConstructorParams } from "./CompanyConstructorParams";
 
 export class Company {
   public readonly id: string;
-  public readonly name: string;
-  public readonly address: string;
-  public readonly taxPayerNumber: string;
-  public readonly telephone: string;
-  public readonly website: string;
-  public readonly email: string;
+  public name: string;
+  public address: string;
+  public taxPayerNumber: string;
+  public telephone: string;
+  public website: string;
+  public email: string;
 
   constructor(companyDetails: CompanyConstructorParams) {
     this.id = companyDetails.id;
