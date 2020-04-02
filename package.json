@@ -10,7 +10,9 @@
     "lint": "eslint **/*.ts",
     "server:dev": "ENV=dev ts-node index.ts",
     "server:prod": "tsc && ENV=prod node dist/index.js",
-    "clean:db": "ts-node infrastructure/utils/cleanFileDatabase.ts"
+    "server:docker": "npm run build:docker && docker run -p 4201:4200 invoices",
+    "clean:db": "ts-node infrastructure/utils/cleanFileDatabase.ts",
+    "build:docker": "docker build -t invoices ."
   },
   "author": "Wojciech Bal",
   "license": "ISC",

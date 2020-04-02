@@ -6,6 +6,8 @@ COPY package*.json ./
 
 RUN npm install --only=production
 
+RUN npm install -g ts-node
+
 COPY . .
 
 EXPOSE 4201

@@ -22,9 +22,14 @@ npm run server:prod
 
 #### Serve production app via Docker
 - build image: `docker build -t invoices .`
-- run: `docker run -p 4201:4201 invoices`
+- run: `docker run -p 4201:4200 invoices`
 
-App is now served at `localhost:4201` with `prod` configuration.
+The commands above are combined into one npm script:
+```
+npm run server:docker
+```
+
+App is now available at `localhost:4201` with `prod` configuration. Port `4201` is exposed to the world, even if application is served at port `4200` in container.
 
 See list of running containers (flag `-a` lists all containers):
 
