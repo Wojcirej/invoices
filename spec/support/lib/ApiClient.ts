@@ -31,6 +31,18 @@ export class ApiClient {
     return ApiClient.requestResponse(path, "POST", headers, requestBody, status, body);
   }
 
+  async makePutRequest({ endpoint, requestBody = {}, headers = {} }): Promise<ApiClientResponse> {
+    const path = `${this.url}/${endpoint}`;
+    const response = await fetch(path, {
+      method: "PUT",
+      body: JSON.stringify(requestBody),
+      headers
+    });
+    const status = await response.status;
+    const body = await response.json();
+    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, body);
+  }
+
   async makePatchRequest({ endpoint, requestBody = {}, headers = {} }): Promise<ApiClientResponse> {
     const path = `${this.url}/${endpoint}`;
     const response = await fetch(path, {

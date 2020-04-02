@@ -1,7 +1,10 @@
-import { baseUrl, setUpTestServer } from "../../support/testServer";
-import fetch from "node-fetch";
+import { apiClient } from "../../support/lib";
+import { validHeaders } from "../../support/validHeaders";
+import { setUpTestServer } from "../../support/testServer";
 
-let server;
+let server, response;
+const endpoint = "app_status";
+const headers = validHeaders.contentType;
 
 describe("Healthcheck router", () => {
   beforeAll(() => {
@@ -13,21 +16,16 @@ describe("Healthcheck router", () => {
   });
 
   describe("GET /app_status", () => {
-    const path = `${baseUrl}/app_status`;
-    let response, status, responseBody;
-
     beforeAll(async () => {
-      response = await fetch(path);
-      status = await response.status;
-      responseBody = await response.json();
+      response = await apiClient.makeGetRequest({ endpoint, headers });
     });
 
     it("returns HTTP 200 status", async () => {
-      expect(status).toEqual(200);
+      expect(response.responseStatus).toEqual(200);
     });
 
     it("returns info about HTTP health", async () => {
-      expect(responseBody.status.http).toEqual("Healthy");
+      expect(response.responseBody.status.http).toEqual("Healthy");
     });
   });
 });
