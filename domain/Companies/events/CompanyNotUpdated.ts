@@ -1,5 +1,5 @@
 import { CompanyEvent } from "./CompanyEvent";
-import { Company } from "../../../domain/Companies/Company";
+import { Company } from "../Company";
 
 export class CompanyNotUpdated extends CompanyEvent {
   public readonly errors;

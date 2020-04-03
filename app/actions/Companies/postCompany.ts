@@ -1,5 +1,5 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
-import { CreateCompany } from "../../services/CreateCompany";
+import { CreateCompany } from "../../../domain/Companies/services/CreateCompany";
 
 export const postCompany = async (req, res) => {
   let status = 422;

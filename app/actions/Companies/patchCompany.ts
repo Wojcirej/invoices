@@ -1,11 +1,11 @@
 import { mapErrorToApiResponse } from "../../utils/mapErrorToApiResponse";
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
-import { EditCompany } from "../../services/EditCompany";
+import { UpdateCompany } from "../../../domain/Companies/services/UpdateCompany";
 
 export const patchCompany = async (req, res) => {
   try {
     let status = 422;
-    const event = EditCompany.call(req.params.id, req.body, new CompanyRepository());
+    const event = UpdateCompany.call(req.params.id, req.body, new CompanyRepository());
     if (event.isSuccess()) status = 200;
     res.status(status).json(event);
   } catch (error) {

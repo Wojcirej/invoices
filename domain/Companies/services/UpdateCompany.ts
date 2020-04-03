@@ -1,9 +1,9 @@
-import { CompanyEvent } from "../events/Companies/CompanyEvent";
-import { Company } from "../../domain/Companies/Company";
-import { CompanyUpdated } from "../events/Companies/CompanyUpdated";
-import { CompanyNotUpdated } from "../events/Companies/CompanyNotUpdated";
+import { CompanyEvent } from "../events/CompanyEvent";
+import { Company } from "../Company";
+import { CompanyUpdated } from "../events/CompanyUpdated";
+import { CompanyNotUpdated } from "../events/CompanyNotUpdated";
 
-export class EditCompany {
+export class UpdateCompany {
   private readonly companyId: string;
   private readonly data;
   private readonly companyRepository;
@@ -14,7 +14,7 @@ export class EditCompany {
   }
 
   static call(companyId, data, companyRepository): CompanyEvent {
-    return new EditCompany(companyId, data, companyRepository).call();
+    return new UpdateCompany(companyId, data, companyRepository).call();
   }
 
   call(): CompanyEvent {

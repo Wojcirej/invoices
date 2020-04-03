@@ -1,7 +1,7 @@
-import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
-import { CreateCompany } from "../../../app/services/CreateCompany";
-import { CompanyCreated } from "../../../app/events/Companies/CompanyCreated";
-import { CompanyNotCreated } from "../../../app/events/Companies/CompanyNotCreated";
+import { CompanyRepository } from "../../../../domain/Companies/CompanyRepository";
+import { CreateCompany } from "../../../../domain/Companies/services/CreateCompany";
+import { CompanyCreated } from "../../../../domain/Companies/events/CompanyCreated";
+import { CompanyNotCreated } from "../../../../domain/Companies/events/CompanyNotCreated";
 
 describe("CreateCompany", () => {
   const repository = new CompanyRepository();

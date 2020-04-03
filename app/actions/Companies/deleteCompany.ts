@@ -1,6 +1,6 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
 import { mapErrorToApiResponse } from "../../utils/mapErrorToApiResponse";
-import { CompanyDto } from "../../dto/CompanyDto";
+import { CompanyDto } from "../../../domain/Companies/dto/CompanyDto";
 
 export const deleteCompany = async (req, res) => {
   const repository = new CompanyRepository();

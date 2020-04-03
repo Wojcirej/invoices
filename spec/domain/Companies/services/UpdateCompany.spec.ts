@@ -1,8 +1,8 @@
-import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
-import { EditCompany } from "../../../app/services/EditCompany";
-import { CompanyFactory } from "../../../domain/Companies/CompanyFactory";
-import { CompanyUpdated } from "../../../app/events/Companies/CompanyUpdated";
-import { CompanyNotUpdated } from "../../../app/events/Companies/CompanyNotUpdated";
+import { CompanyRepository } from "../../../../domain/Companies/CompanyRepository";
+import { UpdateCompany } from "../../../../domain/Companies/services/UpdateCompany";
+import { CompanyFactory } from "../../../../domain/Companies/CompanyFactory";
+import { CompanyUpdated } from "../../../../domain/Companies/events/CompanyUpdated";
+import { CompanyNotUpdated } from "../../../../domain/Companies/events/CompanyNotUpdated";
 
 describe("EditCompany", () => {
   const repository = new CompanyRepository();
@@ -13,7 +13,7 @@ describe("EditCompany", () => {
 
       it("throws CompanyNotFoundError", () => {
         try {
-          EditCompany.call(companyId, {}, repository);
+          UpdateCompany.call(companyId, {}, repository);
         } catch (error) {
           expect(error.name).toEqual("CompanyNotFoundError");
           expect(error.message).toEqual(`Company with id ${companyId} does not exist.`);
@@ -39,16 +39,16 @@ describe("EditCompany", () => {
         });
 
         it("returns instance of CompanyUpdated event", () => {
-          const editedCompany = EditCompany.call(company.id, data, repository);
+          const editedCompany = UpdateCompany.call(company.id, data, repository);
           expect(editedCompany).toBeInstanceOf(CompanyUpdated);
         });
 
         it("returns instance of event indicating successful action", () => {
-          expect(EditCompany.call(company.id, data, repository).isSuccess()).toBe(true);
+          expect(UpdateCompany.call(company.id, data, repository).isSuccess()).toBe(true);
         });
 
         it("returns Company with edited details", () => {
-          const editedCompany = EditCompany.call(company.id, data, repository);
+          const editedCompany = UpdateCompany.call(company.id, data, repository);
           expect(editedCompany.name).toEqual(data.name);
           expect(editedCompany.address).toEqual(data.address);
           expect(editedCompany.taxPayerNumber).toEqual(data.taxPayerNumber);
@@ -75,16 +75,16 @@ describe("EditCompany", () => {
         });
 
         it("returns instance of CompanyNotUpdated event", () => {
-          const editedCompany = EditCompany.call(company.id, data, repository);
+          const editedCompany = UpdateCompany.call(company.id, data, repository);
           expect(editedCompany).toBeInstanceOf(CompanyNotUpdated);
         });
 
         it("returns instance of event indicating not successful action", () => {
-          expect(EditCompany.call(company.id, data, repository).isSuccess()).toBe(false);
+          expect(UpdateCompany.call(company.id, data, repository).isSuccess()).toBe(false);
         });
 
         it("returns Company with edited details", () => {
-          const editedCompany = EditCompany.call(company.id, data, repository);
+          const editedCompany = UpdateCompany.call(company.id, data, repository);
           expect(editedCompany.name).toEqual(data.name);
           expect(editedCompany.address).toEqual(data.address);
           expect(editedCompany.taxPayerNumber).toEqual(data.taxPayerNumber);

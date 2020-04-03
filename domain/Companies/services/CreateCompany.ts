@@ -1,7 +1,7 @@
-import { CompanyEvent } from "../events/Companies/CompanyEvent";
-import { CompanyFactory } from "../../domain/Companies/CompanyFactory";
-import { CompanyCreated } from "../events/Companies/CompanyCreated";
-import { CompanyNotCreated } from "../events/Companies/CompanyNotCreated";
+import { CompanyEvent } from "../events/CompanyEvent";
+import { CompanyFactory } from "../CompanyFactory";
+import { CompanyCreated } from "../events/CompanyCreated";
+import { CompanyNotCreated } from "../events/CompanyNotCreated";
 
 export class CreateCompany {
   private readonly data;

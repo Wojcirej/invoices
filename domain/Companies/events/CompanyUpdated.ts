@@ -1,7 +1,7 @@
 import { CompanyEvent } from "./CompanyEvent";
-import { Company } from "../../../domain/Companies/Company";
+import { Company } from "../Company";
 
-export class CompanyCreated extends CompanyEvent {
+export class CompanyUpdated extends CompanyEvent {
   constructor(company: Company) {
     super(company);
   }
