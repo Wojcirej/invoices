@@ -1,6 +1,6 @@
-import { Company } from "../../domain/Companies/Company";
+import { Company } from "../../../domain/Companies/Company";
 
-export class InvalidCompanyDto {
+export abstract class CompanyEvent {
   public readonly id: string;
   public readonly name: string;
   public readonly address: string;
@@ -8,8 +8,10 @@ export class InvalidCompanyDto {
   public readonly telephone: string;
   public readonly website: string;
   public readonly email: string;
-  public readonly errors;
-  constructor(company: Company) {
+
+  public abstract isSuccess(): boolean;
+
+  protected constructor(company: Company) {
     this.id = company.id;
     this.name = company.name;
     this.address = company.address;
@@ -17,6 +19,5 @@ export class InvalidCompanyDto {
     this.telephone = company.telephone;
     this.website = company.website;
     this.email = company.email;
-    this.errors = company.errors;
   }
 }

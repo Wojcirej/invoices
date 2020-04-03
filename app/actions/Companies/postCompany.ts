@@ -1,15 +1,9 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
-import { CompanyFactory } from "../../../domain/Companies/CompanyFactory";
-import { CompanyDto } from "../../dto/CompanyDto";
-import { InvalidCompanyDto } from "../../dto/InvalidCompanyDto";
+import { CreateCompany } from "../../services/CreateCompany";
 
 export const postCompany = async (req, res) => {
-  const repository = new CompanyRepository();
-  const company = CompanyFactory.build(req.body);
-  if (company.isValid()) {
-    repository.save(company);
-    res.status(201).json(new CompanyDto(company));
-  } else {
-    res.status(422).json(new InvalidCompanyDto(company));
-  }
+  let status = 422;
+  const event = CreateCompany.call(req.body, new CompanyRepository());
+  if (event.isSuccess()) status = 201;
+  res.status(status).json(event);
 };
