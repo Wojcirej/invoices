@@ -4,13 +4,12 @@ import { validHeaders } from "../../support/validHeaders";
 import { setUpTestServer } from "../../support/testServer";
 import { itBehavesLikeEndpointEnforcingContentTypeJson } from "../../support/sharedExamples";
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
-import { InvoiceFactory } from "../../../domain/Invoices/factories/InvoiceFactory";
-import { invoicePayload } from "../../support/mocks/payloadSamples";
 import { CompanyFactory } from "../../../domain/Companies/CompanyFactory";
 
 let server, response;
 const repository = new CompanyRepository();
 const headers = validHeaders.contentType;
+const expectedCompanyKeys = ["id", "name", "address", "taxPayerNumber", "telephone", "website", "email"];
 
 describe("Companies router", () => {
   beforeAll(() => {
@@ -41,6 +40,10 @@ describe("Companies router", () => {
 
       it("responds with requested Company id", () => {
         expect(response.responseBody.id).toEqual(company.id);
+      });
+
+      it("returns Company object describing company", () => {
+        expect(Object.keys(response.responseBody)).toEqual(expectedCompanyKeys);
       });
 
       it("returns details of the requested Company", () => {
@@ -89,9 +92,8 @@ describe("Companies router", () => {
     });
 
     it("returns list of objects describing companies", () => {
-      const expectedKeys = ["id", "name", "address", "taxPayerNumber", "telephone", "website", "email"];
       response.responseBody.forEach(company => {
-        expect(Object.keys(company)).toEqual(expectedKeys);
+        expect(Object.keys(company)).toEqual(expectedCompanyKeys);
       });
     });
   });
@@ -121,6 +123,10 @@ describe("Companies router", () => {
 
       it("responds with ID of the newly created Company", () => {
         expect(response.responseBody.id).toBeTruthy();
+      });
+
+      it("returns Company object describing newly created Company", () => {
+        expect(Object.keys(response.responseBody)).toEqual(expectedCompanyKeys);
       });
 
       it("responds with details of the newly created Company", () => {
@@ -167,6 +173,10 @@ describe("Companies router", () => {
 
       it("responds with requested Company id", () => {
         expect(response.responseBody.id).toEqual(company.id);
+      });
+
+      it("returns Company object describing updated Company", () => {
+        expect(Object.keys(response.responseBody)).toEqual(expectedCompanyKeys);
       });
 
       it("returns details of the updated Company", () => {
@@ -217,6 +227,10 @@ describe("Companies router", () => {
 
       it("responds with requested Company id", () => {
         expect(response.responseBody.id).toEqual(company.id);
+      });
+
+      it("returns Company object describing deleted Company", () => {
+        expect(Object.keys(response.responseBody)).toEqual(expectedCompanyKeys);
       });
 
       it("returns details of the deleted Company", () => {

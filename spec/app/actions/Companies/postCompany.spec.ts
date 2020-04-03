@@ -20,6 +20,18 @@ describe("postCompany", () => {
     expect(actualResponseBody.id).toBeTruthy();
   });
 
+  it("returns Company object describing newly created Company", () => {
+    expect(Object.keys(actualResponseBody)).toEqual([
+      "id",
+      "name",
+      "address",
+      "taxPayerNumber",
+      "telephone",
+      "website",
+      "email"
+    ]);
+  });
+
   it("returns details of the newly Created company", () => {
     expect(actualResponseBody.name).toEqual(invoicePayload.invoice.seller.name);
     expect(actualResponseBody.address).toEqual(invoicePayload.invoice.seller.address);

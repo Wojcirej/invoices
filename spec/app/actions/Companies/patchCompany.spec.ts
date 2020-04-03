@@ -35,6 +35,18 @@ describe("patchCompany", () => {
       expect(actualResponseBody.id).toEqual(companyId);
     });
 
+    it("returns Company object describing edited Company", () => {
+      expect(Object.keys(actualResponseBody)).toEqual([
+        "id",
+        "name",
+        "address",
+        "taxPayerNumber",
+        "telephone",
+        "website",
+        "email"
+      ]);
+    });
+
     it("returns details of the edited Company", () => {
       expect(actualResponseBody.name).toEqual(data.name);
       expect(actualResponseBody.address).toEqual(data.address);

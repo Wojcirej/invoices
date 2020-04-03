@@ -27,6 +27,18 @@ describe("getCompany", () => {
       expect(actualResponseBody.id).toEqual(companyId);
     });
 
+    it("returns Company object describing Company", () => {
+      expect(Object.keys(actualResponseBody)).toEqual([
+        "id",
+        "name",
+        "address",
+        "taxPayerNumber",
+        "telephone",
+        "website",
+        "email"
+      ]);
+    });
+
     it("returns details of the requested Company", () => {
       expect(actualResponseBody.name).toEqual(invoicePayload.invoice.seller.name);
       expect(actualResponseBody.address).toEqual(invoicePayload.invoice.seller.address);
