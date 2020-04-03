@@ -187,46 +187,96 @@ describe("Companies router", () => {
     itBehavesLikeEndpointEnforcingContentTypeJson(apiClient, endpoint, "Patch");
 
     describe("when Company with requested ID exists", () => {
-      const company = CompanyFactory.build();
-      repository.save(company);
-      const endpoint = `companies/${company.id}`;
+      describe("when valid request", () => {
+        const company = CompanyFactory.build();
+        repository.save(company);
+        const endpoint = `companies/${company.id}`;
 
-      const data = {
-        name: "New",
-        address: "Completely new",
-        taxPayerNumber: "1223-451-12",
-        telephone: "123 456 789",
-        website: "www.example.com",
-        email: "mail@example.com"
-      };
+        const data = {
+          name: "New",
+          address: "Completely new",
+          taxPayerNumber: "1223-451-12",
+          telephone: "123 456 789",
+          website: "www.example.com",
+          email: "mail@example.com"
+        };
 
-      beforeAll(async () => {
-        response = await apiClient.makePatchRequest({ endpoint, headers, requestBody: data });
+        beforeAll(async () => {
+          response = await apiClient.makePatchRequest({ endpoint, headers, requestBody: data });
+        });
+
+        afterAll(() => {
+          repository.destroy(company.id);
+        });
+
+        it("responds with HTTP 200 status", () => {
+          expect(response.responseStatus).toEqual(200);
+        });
+
+        it("responds with requested Company id", () => {
+          expect(response.responseBody.id).toEqual(company.id);
+        });
+
+        it("returns Company object describing updated Company", () => {
+          expect(Object.keys(response.responseBody)).toEqual(expectedCompanyKeys);
+        });
+
+        it("returns details of the updated Company", () => {
+          expect(response.responseBody.name).toEqual(data.name);
+          expect(response.responseBody.address).toEqual(data.address);
+          expect(response.responseBody.taxPayerNumber).toEqual(data.taxPayerNumber);
+          expect(response.responseBody.email).toEqual(data.email);
+          expect(response.responseBody.telephone).toEqual(data.telephone);
+          expect(response.responseBody.website).toEqual(data.website);
+        });
       });
 
-      afterAll(() => {
-        repository.destroy(company.id);
-      });
+      describe("when invalid request", () => {
+        const company = CompanyFactory.build();
+        repository.save(company);
+        const endpoint = `companies/${company.id}`;
 
-      it("responds with HTTP 200 status", () => {
-        expect(response.responseStatus).toEqual(200);
-      });
+        const data = {
+          name: "New",
+          address: "Completely new",
+          taxPayerNumber: "1223-451-12",
+          telephone: "123 456 789",
+          website: "www.example.com",
+          email: "mail[at]example.com"
+        };
 
-      it("responds with requested Company id", () => {
-        expect(response.responseBody.id).toEqual(company.id);
-      });
+        beforeAll(async () => {
+          response = await apiClient.makePatchRequest({ endpoint, headers, requestBody: data });
+        });
 
-      it("returns Company object describing updated Company", () => {
-        expect(Object.keys(response.responseBody)).toEqual(expectedCompanyKeys);
-      });
+        afterAll(() => {
+          repository.destroy(company.id);
+        });
 
-      it("returns details of the updated Company", () => {
-        expect(response.responseBody.name).toEqual(data.name);
-        expect(response.responseBody.address).toEqual(data.address);
-        expect(response.responseBody.taxPayerNumber).toEqual(data.taxPayerNumber);
-        expect(response.responseBody.email).toEqual(data.email);
-        expect(response.responseBody.telephone).toEqual(data.telephone);
-        expect(response.responseBody.website).toEqual(data.website);
+        it("responds with HTTP 422 status", () => {
+          expect(response.responseStatus).toEqual(422);
+        });
+
+        it("responds with requested Company id", () => {
+          expect(response.responseBody.id).toEqual(company.id);
+        });
+
+        it("returns Company object describing updated Company", () => {
+          expect(Object.keys(response.responseBody)).toEqual([...expectedCompanyKeys, "errors"]);
+        });
+
+        it("returns details of the potentially updated Company", () => {
+          expect(response.responseBody.name).toEqual(data.name);
+          expect(response.responseBody.address).toEqual(data.address);
+          expect(response.responseBody.taxPayerNumber).toEqual(data.taxPayerNumber);
+          expect(response.responseBody.email).toEqual(data.email);
+          expect(response.responseBody.telephone).toEqual(data.telephone);
+          expect(response.responseBody.website).toEqual(data.website);
+        });
+
+        it("returns list of errors", () => {
+          expect(response.responseBody.errors.email).toEqual("Invalid format");
+        });
       });
     });
 
