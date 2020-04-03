@@ -1,11 +1,10 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
 import { mapErrorToApiResponse } from "../../utils/mapErrorToApiResponse";
-import { CompanyDto } from "../../../domain/Companies/dto/CompanyDto";
+import { fetchCompany } from "../../../domain/Companies/services/fetchCompany";
 
 export const getCompany = async (req, res) => {
-  const repository = new CompanyRepository();
   try {
-    const company = new CompanyDto(repository.find(req.params.id));
+    const company = fetchCompany(req.params.id, new CompanyRepository());
     res.status(200).json(company);
   } catch (error) {
     const { status, message } = mapErrorToApiResponse(error);
