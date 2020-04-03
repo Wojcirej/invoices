@@ -87,6 +87,13 @@ describe("Companies router", () => {
       const receivedCompanyIds = response.responseBody.map(company => company.id);
       expect(expectedCompanyIds).toEqual(receivedCompanyIds);
     });
+
+    it("returns list of objects describing companies", () => {
+      const expectedKeys = ["id", "name", "address", "taxPayerNumber", "telephone", "website", "email"];
+      response.responseBody.forEach(company => {
+        expect(Object.keys(company)).toEqual(expectedKeys);
+      });
+    });
   });
 
   describe("POST /companies", () => {

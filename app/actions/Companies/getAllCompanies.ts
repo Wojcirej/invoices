@@ -1,6 +1,7 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
+import { fetchAllCompanies } from "../../services/fetchAllCompanies";
 
 export const getAllCompanies = async (req, res) => {
-  const repository = new CompanyRepository();
-  res.status(200).json(repository.findAll());
+  const companies = fetchAllCompanies(new CompanyRepository());
+  res.status(200).json(companies);
 };
