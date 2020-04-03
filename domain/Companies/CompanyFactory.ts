@@ -13,17 +13,30 @@ export class CompanyFactory {
   private readonly email: string;
 
   constructor(data) {
-    this.id = data.id || uuid();
-    this.name = data.name || faker.company.companyName();
-    this.address = data.address || faker.address.country();
-    this.taxPayerNumber = data.taxPayerNumber || "123-45-67-819";
-    this.telephone = data.telephone || faker.phone.phoneNumber();
-    this.website = data.website || faker.internet.url();
-    this.email = data.email || faker.internet.email();
+    this.id = data.id;
+    this.name = data.name;
+    this.address = data.address;
+    this.taxPayerNumber = data.taxPayerNumber;
+    this.telephone = data.telephone;
+    this.website = data.website;
+    this.email = data.email;
   }
 
   static build(data = {}): Company {
-    return new CompanyFactory(data).build();
+    const id = uuid();
+    if (Object.keys(data).length === 0) {
+      return new CompanyFactory({
+        id,
+        name: faker.company.companyName(),
+        address: faker.address.country(),
+        taxPayerNumber: "123-45-67-819",
+        telephone: faker.phone.phoneNumber(),
+        website: faker.internet.url(),
+        email: faker.internet.email()
+      }).build();
+    }
+    const object = Object.assign({ id }, data);
+    return new CompanyFactory(object).build();
   }
 
   build(): Company {

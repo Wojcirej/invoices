@@ -1,7 +1,7 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
 import { EditCompany } from "../../../app/services/EditCompany";
 import { CompanyFactory } from "../../../domain/Companies/CompanyFactory";
-import { Company } from "../../../domain/Companies/Company";
+import { CompanyDto } from "../../../app/dto/CompanyDto";
 
 describe("EditCompany", () => {
   const repository = new CompanyRepository();
@@ -38,7 +38,7 @@ describe("EditCompany", () => {
 
       it("returns Company instance", () => {
         const editedCompany = EditCompany.call(company.id, data, repository);
-        expect(editedCompany).toBeInstanceOf(Company);
+        expect(editedCompany).toBeInstanceOf(CompanyDto);
       });
 
       it("returns Company with edited details", () => {

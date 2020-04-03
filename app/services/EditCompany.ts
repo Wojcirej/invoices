@@ -1,4 +1,4 @@
-import { Company } from "../../domain/Companies/Company";
+import { CompanyDto } from "../dto/CompanyDto";
 
 export class EditCompany {
   private readonly companyId: string;
@@ -10,11 +10,11 @@ export class EditCompany {
     this.companyRepository = companyRepository;
   }
 
-  static call(companyId, data, companyRepository): Company {
+  static call(companyId, data, companyRepository): CompanyDto {
     return new EditCompany(companyId, data, companyRepository).call();
   }
 
-  call(): Company {
+  call(): CompanyDto {
     const company = this.companyRepository.find(this.companyId);
     company.name = this.data.name;
     company.address = this.data.address;
@@ -23,6 +23,6 @@ export class EditCompany {
     company.website = this.data.website;
     company.email = this.data.email;
     this.companyRepository.save(company);
-    return company;
+    return new CompanyDto(company);
   }
 }

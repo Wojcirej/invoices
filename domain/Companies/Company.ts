@@ -8,6 +8,7 @@ export class Company {
   public telephone: string;
   public website: string;
   public email: string;
+  public readonly errors;
 
   constructor(companyDetails: CompanyConstructorParams) {
     this.id = companyDetails.id;
@@ -17,5 +18,28 @@ export class Company {
     this.telephone = companyDetails.telephone;
     this.website = companyDetails.website;
     this.email = companyDetails.email;
+    this.errors = {};
+  }
+
+  isValid(): boolean {
+    return (
+      this.isValidString(this.name) &&
+      this.isValidString(this.address) &&
+      this.isValidString(this.taxPayerNumber) &&
+      this.isValidString(this.telephone) &&
+      this.isValidString(this.website) &&
+      this.isValidEmail()
+    );
+  }
+
+  private isValidEmail() {
+    const result = this.isValidString(this.email) && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email);
+    if (result) return true;
+    this.errors["email"] = "Invalid format";
+    return false;
+  }
+
+  private isValidString(value): boolean {
+    return !!value && typeof value === "string" && value.length > 0;
   }
 }

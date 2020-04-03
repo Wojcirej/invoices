@@ -1,10 +1,11 @@
 import { CompanyRepository } from "../../../domain/Companies/CompanyRepository";
 import { mapErrorToApiResponse } from "../../utils/mapErrorToApiResponse";
+import { CompanyDto } from "../../dto/CompanyDto";
 
 export const deleteCompany = async (req, res) => {
   const repository = new CompanyRepository();
   try {
-    const deletedCompany = repository.destroy(req.params.id);
+    const deletedCompany = new CompanyDto(repository.destroy(req.params.id));
     res.status(200).json(deletedCompany);
   } catch (error) {
     const { status, message } = mapErrorToApiResponse(error);

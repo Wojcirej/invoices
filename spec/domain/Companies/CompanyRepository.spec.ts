@@ -36,7 +36,7 @@ describe("CompanyRepository", () => {
 
   describe("#find", () => {
     describe("when Company with provided ID exists", () => {
-      const company = CompanyFactory.build(invoicePayload.invoice.seller);
+      const company = CompanyFactory.build();
       repository.save(company);
 
       afterAll(() => {
