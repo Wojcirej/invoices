@@ -138,6 +138,47 @@ describe("Companies router", () => {
         expect(response.responseBody.website).toEqual(data.website);
       });
     });
+
+    describe("when valid request", () => {
+      const data = {
+        name: "New",
+        address: "Completely new",
+        taxPayerNumber: "1223-451-12",
+        telephone: "123 456 789",
+        website: "www.example.com",
+        email: "Invalid mail"
+      };
+
+      beforeAll(async () => {
+        response = await apiClient.makePostRequest({ endpoint, headers, requestBody: data });
+      });
+
+      it("responds with HTTP 422 status", () => {
+        expect(response.responseStatus).toEqual(422);
+      });
+
+      it("responds with ID of the newly created Company", () => {
+        expect(response.responseBody.id).toBeTruthy();
+      });
+
+      it("returns Company object describing newly created Company", () => {
+        expect(Object.keys(response.responseBody)).toEqual([...expectedCompanyKeys, "errors"]);
+      });
+
+      it("responds with provided data for the potential new Company", () => {
+        expect(response.responseBody.name).toEqual(data.name);
+        expect(response.responseBody.address).toEqual(data.address);
+        expect(response.responseBody.taxPayerNumber).toEqual(data.taxPayerNumber);
+        expect(response.responseBody.email).toEqual(data.email);
+        expect(response.responseBody.telephone).toEqual(data.telephone);
+        expect(response.responseBody.website).toEqual(data.website);
+      });
+
+      it("returns list of errors", () => {
+        const errors = response.responseBody.errors;
+        expect(errors.email).toEqual("Invalid format");
+      });
+    });
   });
 
   describe("PATCH /companies/:id", () => {

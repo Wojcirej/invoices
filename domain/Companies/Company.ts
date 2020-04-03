@@ -22,14 +22,13 @@ export class Company {
   }
 
   isValid(): boolean {
-    return (
-      this.isValidString(this.name) &&
-      this.isValidString(this.address) &&
-      this.isValidString(this.taxPayerNumber) &&
-      this.isValidString(this.telephone) &&
-      this.isValidString(this.website) &&
-      this.isValidEmail()
-    );
+    this.isValidString(this.name);
+    this.isValidString(this.address);
+    this.isValidString(this.taxPayerNumber);
+    this.isValidString(this.telephone);
+    this.isValidString(this.website);
+    this.isValidEmail();
+    return Object.keys(this.errors).length === 0;
   }
 
   private isValidEmail() {
