@@ -1,7 +1,7 @@
 import { v4 as isUUIDv4 } from "is-uuid";
 
-import { AccountFactory } from "../../../domain/IdentityAndAccess/factories/AccountFactory";
-import { Account } from "../../../domain/IdentityAndAccess/Account";
+import { AccountFactory } from "../../../../domain/IdentityAndAccess/factories/AccountFactory";
+import { Account } from "../../../../domain/IdentityAndAccess/Account";
 
 describe("AccountFactory", () => {
   describe(".build", () => {
