@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { Account } from "../Account";
+import { NewAccount } from "../NewAccount";
 
 export class AccountsRepository {
   public readonly path: string;
@@ -9,8 +9,14 @@ export class AccountsRepository {
     this.path = path.join(process.cwd(), "/tmp/db/accounts");
   }
 
-  save(account: Account): boolean {
-    fs.writeFileSync(`${this.path}/${account.id}.json`, JSON.stringify(account, null, 2));
+  save(account: NewAccount): boolean {
+    const objectToSave = {
+      id: account.id,
+      username: account.username,
+      email: account.email,
+      password: account.encryptedPassword
+    };
+    fs.writeFileSync(`${this.path}/${account.id}.json`, JSON.stringify(objectToSave, null, 2));
     return true;
   }
 }

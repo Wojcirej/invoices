@@ -1,13 +1,13 @@
 import { AccountsRepository } from "../../../../domain/IdentityAndAccess/repositories/AccountsRepository";
 import fs from "fs";
-import { AccountFactory } from "../../../../domain/IdentityAndAccess/factories/AccountFactory";
+import { NewAccountFactory } from "../../../../domain/IdentityAndAccess/factories/NewAccountFactory";
 
 describe("AccountRepository", () => {
   const repository = new AccountsRepository();
 
   describe("#save", () => {
     describe("when success", () => {
-      const account = AccountFactory.build();
+      const account = NewAccountFactory.build();
 
       it("returns true", () => {
         expect(repository.save(account)).toBe(true);

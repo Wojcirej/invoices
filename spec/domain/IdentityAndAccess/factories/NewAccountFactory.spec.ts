@@ -1,23 +1,23 @@
 import { v4 as isUUIDv4 } from "is-uuid";
 
-import { AccountFactory } from "../../../../domain/IdentityAndAccess/factories/AccountFactory";
-import { Account } from "../../../../domain/IdentityAndAccess/Account";
+import { NewAccountFactory } from "../../../../domain/IdentityAndAccess/factories/NewAccountFactory";
+import { NewAccount } from "../../../../domain/IdentityAndAccess/NewAccount";
 
 describe("AccountFactory", () => {
   describe(".build", () => {
     describe("when no param passed", () => {
-      it("returns instance of Account", () => {
-        const account = AccountFactory.build();
-        expect(account).toBeInstanceOf(Account);
+      it("returns instance of NewAccount", () => {
+        const account = NewAccountFactory.build();
+        expect(account).toBeInstanceOf(NewAccount);
       });
 
       it("returns valid instance of Company", () => {
-        const account = AccountFactory.build();
+        const account = NewAccountFactory.build();
         expect(account.isValid()).toBe(true);
       });
 
       it("returns instance of Company with ID being valid UUID", () => {
-        const account = AccountFactory.build();
+        const account = NewAccountFactory.build();
         expect(account.id).toBeTruthy("Company's ID is empty");
         expect(isUUIDv4(account.id)).toBe(true);
       });
@@ -30,16 +30,15 @@ describe("AccountFactory", () => {
         email: "email@example.com"
       };
 
-      it("returns instance of Account", () => {
-        const account = AccountFactory.build();
-        expect(account).toBeInstanceOf(Account);
+      it("returns instance of NewAccount", () => {
+        const account = NewAccountFactory.build();
+        expect(account).toBeInstanceOf(NewAccount);
       });
 
-      it("returns instance of Account with matched values", () => {
-        const account = AccountFactory.build(data);
+      it("returns instance of NewAccount with matched values", () => {
+        const account = NewAccountFactory.build(data);
         expect(account.username).toEqual(data.username);
         expect(account.email).toEqual(data.email);
-        expect(account.password).toEqual(data.password);
       });
     });
   });

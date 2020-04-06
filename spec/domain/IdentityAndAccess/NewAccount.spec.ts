@@ -1,4 +1,4 @@
-import { AccountFactory } from "../../../domain/IdentityAndAccess/factories/AccountFactory";
+import { NewAccountFactory } from "../../../domain/IdentityAndAccess/factories/NewAccountFactory";
 
 describe("Account", () => {
   describe("#isValid", () => {
@@ -6,12 +6,12 @@ describe("Account", () => {
       const data = { username: "username", password: "123456789", email: "email@example.com" };
 
       it("returns true", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         expect(account.isValid()).toBe(true);
       });
 
       it("does not report any error messages", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         account.isValid();
         expect(account.errors.username).toEqual(undefined);
         expect(account.errors.email).toEqual(undefined);
@@ -23,12 +23,12 @@ describe("Account", () => {
       const data = { username: null, password: null, email: null };
 
       it("returns false", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         expect(account.isValid()).toBe(false);
       });
 
       it("reports all error messages", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         account.isValid();
         expect(account.errors.username).toEqual("Username is empty");
         expect(account.errors.email).toEqual("Email is empty");
@@ -40,12 +40,12 @@ describe("Account", () => {
       const data = { username: "", password: "", email: "" };
 
       it("returns false", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         expect(account.isValid()).toBe(false);
       });
 
       it("reports all error messages", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         account.isValid();
         expect(account.errors.username).toEqual("Username is empty");
         expect(account.errors.email).toEqual("Email is empty");
@@ -57,12 +57,12 @@ describe("Account", () => {
       const data = { username: "username", password: "12345678901234567890123", email: "email@example.com" };
 
       it("returns false", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         expect(account.isValid()).toBe(false);
       });
 
       it("reports error message about password being too long", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         account.isValid();
         expect(account.errors.username).toEqual(undefined);
         expect(account.errors.email).toEqual(undefined);
@@ -74,17 +74,27 @@ describe("Account", () => {
       const data = { username: "username", password: "12345678", email: "email[at]example.com" };
 
       it("returns false", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         expect(account.isValid()).toBe(false);
       });
 
       it("reports error message about invalid email format", () => {
-        const account = AccountFactory.build(data);
+        const account = NewAccountFactory.build(data);
         account.isValid();
         expect(account.errors.username).toEqual(undefined);
         expect(account.errors.email).toEqual("Email has invalid format");
         expect(account.errors.password).toEqual(undefined);
       });
+    });
+  });
+
+  describe("#encryptPassword", () => {
+    const account = NewAccountFactory.build();
+
+    it("encrypts password by setting internal property", () => {
+      expect(account.hasEncryptedPassword()).toBe(false);
+      account.encryptPassword();
+      expect(account.hasEncryptedPassword()).toBe(true);
     });
   });
 });
