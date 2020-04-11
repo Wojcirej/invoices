@@ -1,6 +1,7 @@
 import { NewAccountFactory } from "../factories/NewAccountFactory";
 import { AccountEvent } from "../events/AccountEvent";
 import { NewAccountRegistered } from "../events/NewAccountRegistered";
+import { NewAccountNotRegistered } from "../events/NewAccountNotRegistered";
 
 export class Register {
   private readonly data;
@@ -19,7 +20,8 @@ export class Register {
     if (account.isValid()) {
       account.encryptPassword();
       this.repository.save(account);
+      return new NewAccountRegistered(account);
     }
-    return new NewAccountRegistered(account);
+    return new NewAccountNotRegistered(account);
   }
 }
