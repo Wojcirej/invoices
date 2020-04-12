@@ -3,12 +3,16 @@ import fs from "fs";
 import { NewAccountFactory } from "../../../../domain/IdentityAndAccess/factories/NewAccountFactory";
 import { RegisteredAccount } from "../../../../domain/IdentityAndAccess/RegisteredAccount";
 
-describe("AccountRepository", () => {
+describe("AccountsRepository", () => {
   const repository = new AccountsRepository();
 
   describe("#save", () => {
     describe("when success", () => {
       const account = NewAccountFactory.build();
+
+      afterAll(() => {
+        repository.destroy(account.id);
+      });
 
       it("returns true", () => {
         expect(repository.save(account)).toBe(true);
@@ -29,6 +33,10 @@ describe("AccountRepository", () => {
         account = NewAccountFactory.build();
         repository.save(account);
         username = account.username;
+      });
+
+      afterAll(() => {
+        repository.destroy(account.id);
       });
 
       it("returns RegisteredAccount instance", () => {
@@ -52,6 +60,41 @@ describe("AccountRepository", () => {
           expect(error.name).toEqual("AccountNotFoundError");
           expect(error.message).toEqual(`Account with username ${username} does not exist`);
         }
+      });
+    });
+  });
+
+  describe("#destroy", () => {
+    describe("when user with specified ID does not exist", () => {
+      const id = "0";
+
+      it("throws AccountNotFoundError", () => {
+        try {
+          repository.destroy(id);
+        } catch (error) {
+          expect(error.name).toEqual("AccountNotFoundError");
+          expect(error.message).toEqual(`Account with ID ${id} could not be deleted - it doesn't exist`);
+        }
+      });
+    });
+
+    describe("when user with specified ID exists", () => {
+      let accountId;
+
+      beforeEach(() => {
+        const account = NewAccountFactory.build();
+        repository.save(account);
+        accountId = account.id;
+      });
+
+      it("returns true", () => {
+        expect(repository.destroy(accountId)).toBe(true);
+      });
+
+      it("deletes account with provided ID", () => {
+        expect(fs.existsSync(`${repository.path}/${accountId}.json`)).toBe(true);
+        repository.destroy(accountId);
+        expect(fs.existsSync(`${repository.path}/${accountId}.json`)).toBe(false);
       });
     });
   });

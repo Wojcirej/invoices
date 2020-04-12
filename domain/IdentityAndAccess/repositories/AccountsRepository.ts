@@ -1,8 +1,8 @@
 import path from "path";
 import fs from "fs";
-import { NewAccount } from "../NewAccount";
 import { RegisteredAccount } from "../RegisteredAccount";
 import { AccountNotFoundError } from "../errors/AccountNotFoundError";
+import { NewAccount } from "../NewAccount";
 
 export class AccountsRepository {
   public readonly path: string;
@@ -35,5 +35,13 @@ export class AccountsRepository {
       const account = JSON.parse(fs.readFileSync(`${this.path}/${accountEntry}`).toString());
       return new RegisteredAccount(account);
     });
+  }
+
+  destroy(id: string): boolean {
+    const all = this.findAll();
+    const account = all.find(acc => acc.id === id);
+    if (!account) throw new AccountNotFoundError(`Account with ID ${id} could not be deleted - it doesn't exist`);
+    fs.unlinkSync(`${this.path}/${account.id}.json`);
+    return !fs.existsSync(`${this.path}/${account.id}.json`);
   }
 }
