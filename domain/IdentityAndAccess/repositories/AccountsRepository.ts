@@ -1,6 +1,8 @@
 import path from "path";
 import fs from "fs";
 import { NewAccount } from "../NewAccount";
+import { RegisteredAccount } from "../RegisteredAccount";
+import { AccountNotFoundError } from "../errors/AccountNotFoundError";
 
 export class AccountsRepository {
   public readonly path: string;
@@ -18,5 +20,20 @@ export class AccountsRepository {
     };
     fs.writeFileSync(`${this.path}/${account.id}.json`, JSON.stringify(objectToSave, null, 2));
     return true;
+  }
+
+  findByUsername(username: string): RegisteredAccount {
+    const allAccounts = this.findAll();
+    const searchedAccount = allAccounts.find(account => account.username === username);
+    if (!searchedAccount) throw new AccountNotFoundError(`Account with username ${username} does not exist`);
+    return searchedAccount;
+  }
+
+  private findAll(): Array<RegisteredAccount> {
+    const all = fs.readdirSync(this.path);
+    return all.map(accountEntry => {
+      const account = JSON.parse(fs.readFileSync(`${this.path}/${accountEntry}`).toString());
+      return new RegisteredAccount(account);
+    });
   }
 }
