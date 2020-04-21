@@ -1,5 +1,6 @@
-import { AuthenticatedAccount } from "../AuthenticatedAccount";
 import { RegisteredAccount } from "../RegisteredAccount";
+import { AccountSession } from "../interfaces/AccountSession";
+import { JsonWebToken } from "../utils/JsonWebToken";
 
 export class Login {
   private readonly username: string;
@@ -12,12 +13,13 @@ export class Login {
     this.repository = repository;
   }
 
-  public static call(credentials, repository): AuthenticatedAccount {
+  public static call(credentials, repository): AccountSession {
     return new Login(credentials, repository).call();
   }
 
-  public call(): AuthenticatedAccount {
+  public call(): AccountSession {
     const account: RegisteredAccount = this.repository.findByUsername(this.username);
-    return account.authenticate(this.password);
+    const authenticatedAccount = account.authenticate(this.password);
+    return { account: authenticatedAccount, token: JsonWebToken.encode(authenticatedAccount) };
   }
 }

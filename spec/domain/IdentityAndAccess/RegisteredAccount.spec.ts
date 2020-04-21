@@ -27,7 +27,6 @@ describe("RegisteredAccount", () => {
     describe("when passwords do not match", () => {
       it("throws AuthenticationError", () => {
         try {
-          console.log(account);
           account.authenticate("");
         } catch (error) {
           expect(error.name).toEqual("AuthenticationError");

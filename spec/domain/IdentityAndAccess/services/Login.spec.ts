@@ -2,6 +2,7 @@ import { AccountsRepository } from "../../../../domain/IdentityAndAccess/reposit
 import { NewAccountFactory } from "../../../../domain/IdentityAndAccess/factories/NewAccountFactory";
 import { AuthenticatedAccount } from "../../../../domain/IdentityAndAccess/AuthenticatedAccount";
 import { Login } from "../../../../domain/IdentityAndAccess/services/Login";
+import { JsonWebToken } from "../../../../domain/IdentityAndAccess/utils/JsonWebToken";
 
 describe("Login", () => {
   const repository = new AccountsRepository();
@@ -33,13 +34,20 @@ describe("Login", () => {
       });
 
       describe("when correct password provided", () => {
-        it("returns instance of AuthenticatedAccount", () => {
-          expect(Login.call(data, repository)).toBeInstanceOf(AuthenticatedAccount);
+        it("returns object containing instance of AuthenticatedAccount", () => {
+          expect(Login.call(data, repository).account).toBeInstanceOf(AuthenticatedAccount);
         });
 
-        it("returns instance of AuthenticatedAccount with username as requested", () => {
+        it("returns object containing instance of AuthenticatedAccount with username as requested", () => {
           const account = Login.call(data, repository);
-          expect(account.username).toEqual(data.username);
+          expect(account.account.username).toEqual(data.username);
+        });
+
+        it("returns object containing token with encoded info about authenticated account", () => {
+          const account = Login.call(data, repository);
+          const decodedToken = JsonWebToken.decode(account.token);
+          expect(decodedToken.data.username).toEqual(data.username);
+          expect(decodedToken.data.email).toEqual(data.email);
         });
       });
 
