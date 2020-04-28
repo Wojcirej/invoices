@@ -16,7 +16,8 @@ export class ApiClient {
     });
     const status = await response.status;
     const body = await response.json();
-    return ApiClient.requestResponse(path, "GET", headers, {}, status, body);
+    const responseHeaders = await response.headers.raw();
+    return ApiClient.requestResponse(path, "GET", headers, {}, status, responseHeaders, body);
   }
 
   async makePostRequest({ endpoint, requestBody = {}, headers = {} }): Promise<ApiClientResponse> {
@@ -28,7 +29,8 @@ export class ApiClient {
     });
     const status = await response.status;
     const body = await response.json();
-    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, body);
+    const responseHeaders = await response.headers.raw();
+    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, responseHeaders, body);
   }
 
   async makePutRequest({ endpoint, requestBody = {}, headers = {} }): Promise<ApiClientResponse> {
@@ -40,7 +42,8 @@ export class ApiClient {
     });
     const status = await response.status;
     const body = await response.json();
-    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, body);
+    const responseHeaders = await response.headers.raw();
+    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, responseHeaders, body);
   }
 
   async makePatchRequest({ endpoint, requestBody = {}, headers = {} }): Promise<ApiClientResponse> {
@@ -52,7 +55,8 @@ export class ApiClient {
     });
     const status = await response.status;
     const body = await response.json();
-    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, body);
+    const responseHeaders = await response.headers.raw();
+    return ApiClient.requestResponse(path, "POST", headers, requestBody, status, responseHeaders, body);
   }
 
   async makeDeleteRequest({ endpoint, headers = {} }): Promise<ApiClientResponse> {
@@ -63,7 +67,8 @@ export class ApiClient {
     });
     const status = await response.status;
     const body = await response.json();
-    return ApiClient.requestResponse(path, "DELETE", headers, {}, status, body);
+    const responseHeaders = await response.headers.raw();
+    return ApiClient.requestResponse(path, "DELETE", headers, {}, status, responseHeaders, body);
   }
 
   private static requestResponse(
@@ -72,6 +77,7 @@ export class ApiClient {
     requestHeaders,
     requestBody,
     responseStatus,
+    responseHeaders,
     responseBody
   ): ApiClientResponse {
     return {
@@ -80,6 +86,7 @@ export class ApiClient {
       requestHeaders,
       requestBody,
       responseStatus,
+      responseHeaders,
       responseBody
     };
   }

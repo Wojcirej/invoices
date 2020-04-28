@@ -4,5 +4,6 @@ export interface ApiClientResponse {
   requestHeaders;
   requestBody;
   responseStatus: number;
+  responseHeaders;
   responseBody;
 }
